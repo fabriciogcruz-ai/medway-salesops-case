@@ -61,7 +61,7 @@ Abra `http://127.0.0.1:8777/` para testar a função local que consulta a API B2
 
 ## Apresentação e vídeo
 
-- **Versão V2 para apresentação:** `deliverables/Medway_SalesOps_Fabricio_Cruz_V2.pptx` e `.pdf`, com **8 slides principais + 3 apêndices fora do vídeo**; 4 gráficos nativos editáveis. A versão anterior foi preservada apenas como histórico.
+- **Versão V2 para apresentação:** `deliverables/Medway_SalesOps_Fabricio_Cruz_V2.pptx` e `.pdf`, com **8 slides principais + 3 apêndices fora do vídeo**; 4 gráficos nativos editáveis. O ritmo visual intercala azul-marinho (tese/alerta/decisão), branco (evidências) e azul-gelo (método/decomposição), sempre na paleta Medway. A versão anterior foi preservada apenas como histórico.
 - `deliverables/Roteiro_Video_12min_V2.md`: narrativa de decisão, perguntas de defesa e uso de IA/ferramentas; alvo de 11–12 minutos com a voz do candidato. **Nenhum vídeo foi gravado automaticamente.**
 - O gerador `make_deck.py` usa `python-pptx` e `cairosvg`; no macOS, Cairo pode precisar estar instalado via Homebrew. Os arquivos Montserrat e licença OFL estão em `assets/fonts/`. O gerador lê os JSONs auditados e falha se as métricas-chave divergirem. Exemplo: `python3 make_deck.py` após instalar essas dependências.
 - A cópia em PDF foi exportada do PPTX via Keynote; não é gerada por `make_deck.py`. **`deliverables/` não é publicado no repositório: anexar PPTX/PDF e vídeo separadamente na submissão.**

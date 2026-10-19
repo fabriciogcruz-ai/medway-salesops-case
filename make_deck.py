@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""Decision-led Medway case deck V2: eight video slides + three appendix slides."""
+"""Decision-led Medway case deck V2: eight video slides + three appendix slides.
+
+Visual rhythm: navy decision slides, white evidence slides, ice methodology slides.
+"""
 from pathlib import Path
 from io import BytesIO
 import json
@@ -23,8 +26,8 @@ C=json.loads((ROOT/'public/data/b2b-snapshot.json').read_text())
 OUT=ROOT/'deliverables/Medway_SalesOps_Fabricio_Cruz_V2.pptx'
 OUT.parent.mkdir(exist_ok=True)
 prs=Presentation();prs.slide_width=Inches(13.333);prs.slide_height=Inches(7.5)
-NAVY=RGBColor(0,32,91);AQUA=RGBColor(1,207,181);WHITE=RGBColor(255,255,255)
-ICE=RGBColor(245,249,251);PALE=RGBColor(224,241,242);MUTED=RGBColor(79,99,118)
+NAVY=RGBColor(0,32,91);BLUE=RGBColor(16,60,120);AQUA=RGBColor(1,207,181);WHITE=RGBColor(255,255,255)
+ICE=RGBColor(235,244,249);PALE=RGBColor(224,241,242);MUTED=RGBColor(79,99,118)
 GRID=RGBColor(220,230,237);GRAY=RGBColor(188,203,213)
 logo=BytesIO(cairosvg.svg2png(url=str(ROOT/'public/medway-logo.svg'),output_width=550))
 
@@ -42,14 +45,14 @@ def txt(s,value,x,y,w,h,size=17,color=NAVY,bold=False,align=None):
         p.font.name='Montserrat';p.font.size=Pt(size);p.font.bold=bold;p.font.color.rgb=color
         if align:p.alignment=align
     return sh
-def base(n,section,title,dark=False,source=None):
-    s=prs.slides.add_slide(prs.slide_layouts[6]);s.background.fill.solid();s.background.fill.fore_color.rgb=NAVY if dark else WHITE
+def base(n,section,title,dark=False,source=None,shade=False):
+    s=prs.slides.add_slide(prs.slide_layouts[6]);s.background.fill.solid();s.background.fill.fore_color.rgb=NAVY if dark else ICE if shade else WHITE
     if dark:rect(s,.48,.27,1.76,.5,WHITE)
     s.shapes.add_picture(logo,Inches(.60 if dark else .55),Inches(.34),width=Inches(1.52))
     txt(s,'SALESOPS  /  MEDWAY',2.38,.40,4,.23,10,WHITE if dark else MUTED,True)
     txt(s,section.upper(),9.15,.40,3.55,.23,10,AQUA if dark else MUTED,True,PP_ALIGN.RIGHT)
     txt(s,title,.65,1.06,12.03,1.1,30,WHITE if dark else NAVY,True)
-    if source:txt(s,source,.66,6.81,11.85,.26,9,WHITE if dark else MUTED)
+    if source:txt(s,source,.66,6.81,11.85,.26,10,WHITE if dark else MUTED)
     txt(s,f'{n:02d} / 08' if n<=8 else f'APÊNDICE {n-8} · FORA DO VÍDEO',9.65,7.12,3.02,.23,10,WHITE if dark else MUTED,True,PP_ALIGN.RIGHT)
     return s
 def chart(s,cats,series,x,y,w,h,maxval,kind=XL_CHART_TYPE.COLUMN_CLUSTERED):
@@ -66,11 +69,11 @@ def chart(s,cats,series,x,y,w,h,maxval,kind=XL_CHART_TYPE.COLUMN_CLUSTERED):
     ch.value_axis.minimum_scale=0;ch.value_axis.maximum_scale=maxval
     ch.value_axis.has_major_gridlines=True;ch.value_axis.major_gridlines.format.line.color.rgb=GRID
     for i,ser in enumerate(ch.series):
-        ser.format.fill.solid();ser.format.fill.fore_color.rgb=AQUA if i else GRAY
+        ser.format.fill.solid();ser.format.fill.fore_color.rgb=(AQUA if i else GRAY) if len(series)>1 else BLUE
         ser.format.line.fill.background()
     return ch
 
-def metric(s,big,label,x,y,w=4,color=NAVY):
+def metric(s,big,label,x,y,w: float=4.0,color=NAVY):
     txt(s,big,x,y,w,.83,40,color,True);txt(s,label,x,y+.90,w,.69,15,WHITE if color==AQUA and s.background.fill.fore_color.rgb==NAVY else MUTED)
 
 m25=[next(r for r in B['monthly'] if r['name']==f'2025-{i:02d}') for i in range(1,8)]
@@ -105,9 +108,9 @@ txt(s,'VALOR PAGO MENSAL · R$ MIL · EIXO A PARTIR DE ZERO',.78,4.03,11.4,.30,1
 chart(s,['jan','fev','mar','abr','mai','jun','jul'],[('2025',[r['cents']/100000 for r in m25]),('2026',[r['cents']/100000 for r in m26])],.82,4.39,11.58,2.13,3200)
 
 # MAIN 3 — multiplicative decomposition without equal charts.
-s=base(3,'B2C · motor','O crescimento veio quase todo de mais registros.',source='Fonte: CSV B2C · jan–jul 2025 vs. jan–jul 2026. Valor = registros × ticket médio; variações arredondadas.')
+s=base(3,'B2C · motor','O crescimento veio quase todo de mais registros.',source='Fonte: CSV B2C · jan–jul 2025 vs. jan–jul 2026. Valor = registros × ticket médio; variações arredondadas.',shade=True)
 metric(s,'+136,24%','volume · 745 → 1.760 registros',.76,2.20,5.38,NAVY)
-rect(s,6.34,2.38,5.43,2.24,ICE)
+rect(s,6.34,2.38,5.43,2.24,WHITE)
 txt(s,'TICKET MÉDIO',6.64,2.69,4.7,.26,12,MUTED,True)
 txt(s,'+1,58%',6.64,3.10,4.4,.70,32,NAVY,True)
 txt(s,money(v25/n25)+' → '+money(v26/n26),6.64,4.02,4.58,.36,15,MUTED)
@@ -115,14 +118,14 @@ rect(s,.77,5.24,11.08,.74,NAVY)
 txt(s,'2,3624 × 1,0158 ≈ 2,3997  |  volume × ticket = valor',1.04,5.40,10.52,.43,19,WHITE,True)
 
 # MAIN 4 — spike = anomaly, not cause.
-s=base(4,'B2C · anomalia','Antes de projetar setembro, explicar o dia 30.',source='Fonte: CSV B2C · 30/09/2025 contra setembro/2025, somando as quatro origens; origem atribuída não prova causa.')
-metric(s,'51,88%','do valor de setembro em um dia',.78,2.24,6.0,NAVY)
-txt(s,'30/09 · '+money(day['cents']),.80,3.72,5.7,.35,15,NAVY,True)
-txt(s,'Demais dias · '+money(sep['cents']-day['cents']),6.70,3.72,5.75,.35,15,MUTED,True,PP_ALIGN.RIGHT)
-rect(s,.80,4.16,11.50,.38,PALE)
+s=base(4,'B2C · anomalia','Antes de projetar setembro, explicar o dia 30.',source='Fonte: CSV B2C · 30/09/2025 contra setembro/2025, somando as quatro origens; origem atribuída não prova causa.',dark=True)
+metric(s,'51,88%','do valor de setembro em um dia',.78,2.24,6.0,AQUA)
+txt(s,'30/09 · '+money(day['cents']),.80,3.72,5.7,.35,15,WHITE,True)
+txt(s,'Demais dias · '+money(sep['cents']-day['cents']),6.70,3.72,5.75,.35,15,PALE,True,PP_ALIGN.RIGHT)
+rect(s,.80,4.16,11.50,.38,RGBColor(43,82,122))
 rect(s,.80,4.16,11.50*day['cents']/sep['cents'],.38,AQUA)
-txt(s,'327 linhas em 30/09/2025 · quatro origens no dia.',.80,4.90,11.5,.43,22,NAVY,True)
-txt(s,'Campanha, lote ou data de registro são hipóteses — auditar antes de projetar.',.80,5.60,11.5,.63,18,NAVY)
+txt(s,'327 linhas em 30/09/2025 · quatro origens no dia.',.80,4.90,11.5,.43,22,WHITE,True)
+txt(s,'Campanha, lote ou data de registro são hipóteses — auditar antes de projetar.',.80,5.60,11.5,.63,18,PALE)
 
 # MAIN 5 — concentration intersection, no double counting.
 s=base(5,'B2B · carteira ativa','Quatro contratos Enterprise × SP concentram 37,06%.',source='Fonte: API de contratos B2B · foto coletada em '+C['fetched_at']+'; status ativo apenas. Valor contratado, não recebido.')
@@ -136,12 +139,12 @@ txt(s,'4 de 26 contratos ativos na interseção Enterprise × SP',1.08,5.02,10.9
 txt(s,'Total: 26 ativos · '+money(active,0)+'/mês',.82,6.15,11.5,.39,18,MUTED)
 
 # MAIN 6 — proof and limits.
-s=base(6,'Método · rastreabilidade','O pipeline reconcilia snapshots; não cria histórico ausente.',source='Fonte: processamento do CSV B2C e snapshot GET /contratos B2B; verificações internas, sem conciliação financeira.')
+s=base(6,'Método · rastreabilidade','O pipeline reconcilia snapshots; não cria histórico ausente.',source='Fonte: processamento do CSV B2C e snapshot GET /contratos B2B; verificações internas, sem conciliação financeira.',shade=True)
 for i,(heading,body) in enumerate([
     ('01  CSV B2C','Normalizar datas e moeda; manter negativo, zero e linhas idênticas sem ID.'),
     ('02  TESTES','Somar 4.435 linhas / R$ 40.165.219,74; 28 IDs B2B = 26 ativos + 2 fora do ativo.'),
     ('03  PUBLICAÇÃO','B2C é CSV fixo. B2B recebe snapshot agendado a cada hora; carimbo revela defasagem.')]):
-    y=2.18+i*1.30;rect(s,.77,y,11.74,1.10,ICE if i!=1 else PALE)
+    y=2.18+i*1.30;rect(s,.77,y,11.74,1.10,WHITE if i!=1 else PALE)
     txt(s,heading,1.04,y+.15,2.48,.41,16,NAVY,True)
     txt(s,body,3.52,y+.15,8.65,.82,16,NAVY)
 txt(s,'Sem histórico de cobranças/status: não calcular MRR histórico ou churn.',.80,6.23,11.68,.45,17,NAVY,True)
@@ -159,13 +162,13 @@ txt(s,'Sem acesso à planilha viva; API B2B em HTTP requer TLS válido para uso 
 s=base(8,'Decisão · próximos passos','A ordem é validar, medir economia, proteger exposição.',dark=True)
 for i,(title,body) in enumerate([
     ('01  AUDITAR','Dono proposto: SalesOps · prova: pedido × pagamento × carga · avançar: data conciliada.'),
-    ('02  MEDIR','Dono proposto: Financeiro + Growth · prova: CAC e margem · avançar: economia validada.'),
+    ('02  TESTAR','R1/R+ concentram 65,77% da alta; piloto Ads só após medir CAC, margem e incrementalidade.'),
     ('03  PROTEGER','Dono proposto: Comercial/CS · prova: vigência e uso · avançar: plano por conta.')]):
     y=2.13+i*1.31;rect(s,.76,y,11.73,1.12,RGBColor(18,68,108))
     txt(s,title,1.04,y+.24,2.10,.39,18,AQUA,True)
     txt(s,body,3.25,y+.16,8.73,.82,16,WHITE)
 link='https://fabriciogcruz-ai.github.io/medway-salesops-case/'
-link_shape=txt(s,'Dashboard · B2C | B2B | conjunto: fabriciogcruz-ai.github.io/medway-salesops-case/',.83,6.00,11.6,.36,14,AQUA,True)
+link_shape=txt(s,'Dashboard · 4 visões: fabriciogcruz-ai.github.io/medway-salesops-case/',.83,6.00,11.6,.36,14,AQUA,True)
 link_shape.click_action.hyperlink.address=link
 txt(s,'Nenhuma recomendação depende de ROI, churn ou MRR histórico inventados.',.83,6.40,11.6,.36,15,WHITE)
 
@@ -179,7 +182,7 @@ chart(s,[r['name'].replace('Extensivo ','Ext. ') for r in reversed(prod)],[('Val
 txt(s,'Valor pago por categoria não informa retorno sobre investimento.',.84,6.24,11.3,.36,16,NAVY,True)
 
 # APPENDIX 2 — cohort, no historical MRR claim.
-s=base(10,'Apêndice · fora do vídeo','Ano de início segmenta a foto atual — não reconstrói MRR.',source='Fonte: API de contratos B2B · ano de início × status atual; sem fim de vigência, cobrança e eventos de status.')
+s=base(10,'Apêndice · fora do vídeo','Ano de início segmenta a foto atual — não reconstrói MRR.',source='Fonte: API de contratos B2B · ano de início × status atual; sem fim de vigência, cobrança e eventos de status.',shade=True)
 a25=next(r for r in C['start_year_status'] if r['year']=='2025' and r['status']=='ativo')
 a26=next(r for r in C['start_year_status'] if r['year']=='2026' and r['status']=='ativo')
 assert a25['active_monthly_cents']+a26['active_monthly_cents']==active
