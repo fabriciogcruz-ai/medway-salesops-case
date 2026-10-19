@@ -47,6 +47,27 @@
     const course = products.find((row) => row.name === "Curso Avulso");
     const cell = b2b.plan_region.find((row) => row.plan === "Institucional Enterprise" && row.region === "SP");
     if (!cell || !b2b.active_monthly_cents) throw new Error("Cruzamento B2B ausente");
+    const eventOrigin = b2c.by_origin.find((row) => row.name === "Evento Presencial");
+    const ambassadorOrigin = b2c.by_origin.find((row) => row.name === "Embaixador");
+    if (!eventOrigin || !ambassadorOrigin) throw new Error("Origens de segmentação ausentes");
+    const dimension = (rows, expected, label) => {
+      if (!Array.isArray(rows) || !rows.length || rows.some((row) => row.count < 5) ||
+          sum(rows, "count") !== expected.count || sum(rows, "cents") !== expected.cents)
+        throw new Error(`Dimensão ${label} incompleta ou granular`);
+      return [...rows].sort((a, b) => b.cents - a.cents);
+    };
+    const eventTypes = dimension(b2c.event_types, eventOrigin, "eventos");
+    const ambassadors = dimension(b2c.ambassadors, ambassadorOrigin, "embaixadores");
+    const icps = dimension(b2c.by_icp, b2c.total, "ICP");
+    const pairRows = b2c.icp_product;
+    if (!Array.isArray(pairRows) || pairRows.length !== 25 || pairRows.some((row) => row.count < 5) ||
+        sum(pairRows, "count") !== b2c.total.count || sum(pairRows, "cents") !== b2c.total.cents)
+      throw new Error("Cruzamento ICP × produto incompleto");
+    const topIcpProduct = [...pairRows].sort((a, b) => b.cents - a.cents)[0];
+    const couponAudit = dimension(b2c.coupon_audit, ambassadorOrigin, "cupom × embaixador");
+    const status = (name) => couponAudit.find((row) => row.name === name);
+    const different = status("Códigos diferentes"), coincident = status("Códigos coincidentes");
+    if (!different || !coincident) throw new Error("Sem base comparável para atribuição por cupom");
     return {
       delta, origins, products,
       originPairDelta: pairDelta(origins, ["Orgânico", "Indicação Direta"]),
@@ -56,6 +77,9 @@
       b2bCell: cell,
       b2bActiveCents: b2b.active_monthly_cents,
       b2bFetchedAt: b2b.fetched_at,
+      eventTypes, ambassadors, icps, couponAudit, topIcpProduct,
+      couponDifferent: different,
+      couponComparableCount: different.count + coincident.count,
     };
   }
 
@@ -73,12 +97,52 @@
     }
   }
 
+  function renderSegment(prefix, rows) {
+    const totalCents = rows.reduce((total, row) => total + row.cents, 0);
+    const totalCount = rows.reduce((total, row) => total + row.count, 0);
+    const lead = rows[0];
+    document.getElementById(`${prefix}-universe`).textContent = number.format(totalCount);
+    document.getElementById(`${prefix}-leader`).textContent = lead.name;
+    document.getElementById(`${prefix}-leader-stats`).textContent = `${number.format(lead.count)} vendas · ${money(lead.cents)} · ${pct(lead.cents, totalCents)} do valor deste universo`;
+    const top = document.getElementById(`${prefix}-top`);
+    top.replaceChildren();
+    for (const row of rows.slice(0, 5)) {
+      const item = document.createElement("div"); item.className = "segment-rank-row";
+      const name = document.createElement("strong"); name.textContent = row.name;
+      const value = document.createElement("span"); value.textContent = `${number.format(row.count)} · ${money(row.cents)}`;
+      item.append(name, value); top.append(item);
+    }
+    const table = document.createElement("table"); table.className = "segment-table";
+    const caption = document.createElement("caption"); caption.className = "sr-only"; caption.textContent = `Ranking completo ${prefix}`;
+    table.append(caption);
+    const header = document.createElement("thead"), headerRow = document.createElement("tr");
+    for (const label of ["Categoria", "Vendas", "Valor pago", "Média/linha"]) {
+      const th = document.createElement("th"); th.scope = "col"; th.textContent = label; headerRow.append(th);
+    }
+    header.append(headerRow); table.append(header);
+    const body = document.createElement("tbody");
+    for (const row of rows) {
+      const tr = document.createElement("tr");
+      const name = document.createElement("th"); name.scope = "row"; name.textContent = row.name; tr.append(name);
+      for (const value of [number.format(row.count), money(row.cents), money(row.cents / row.count)]) {
+        const td = document.createElement("td"); td.textContent = value; tr.append(td);
+      }
+      body.append(tr);
+    }
+    table.append(body); document.getElementById(`${prefix}-all`).replaceChildren(table);
+  }
+
   function render(data) {
     const set = (id, text) => { document.getElementById(id).textContent = text; };
     set("hero-delta", `+${shortMoney(data.delta)}`);
+    set("coupon-divergence-hero", pct(data.couponDifferent.count, data.couponComparableCount));
     set("origin-pair-share", pct(data.originPairDelta, data.delta));
     set("product-pair-share", pct(data.productPairDelta, data.delta));
-    set("paid-signal", pct(data.productPairDelta, data.delta));
+    set("attribution-action", pct(data.couponDifferent.count, data.couponComparableCount));
+    set("event-action", `${data.eventTypes[0].name}: ${number.format(data.eventTypes[0].count)} vendas e ${money(data.eventTypes[0].cents)}`);
+    set("icp-action", `${data.icps[0].name} (${number.format(data.icps[0].count)} vendas)`);
+    set("product-action", pct(data.productPairDelta, data.delta));
+    set("top-pair-action", `${data.topIcpProduct.icp} × ${data.topIcpProduct.product}: ${number.format(data.topIcpProduct.count)} linhas e ${money(data.topIcpProduct.cents)}`);
     set("earned-signal", pct(data.originPairDelta, data.delta));
     set("course-volume", number.format(data.course.count2026));
     set("course-growth-share", pct(data.courseDelta, data.delta));
@@ -88,6 +152,15 @@
     set("b2b-stamp", Number.isNaN(fetched.getTime()) ? "data indisponível" : new Intl.DateTimeFormat("pt-BR", { timeZone: "America/Sao_Paulo", day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" }).format(fetched));
     renderBars(document.getElementById("origin-bars"), data.origins, data.delta);
     renderBars(document.getElementById("product-bars"), data.products, data.delta);
+    renderSegment("event", data.eventTypes);
+    renderSegment("ambassador", data.ambassadors);
+    renderSegment("icp", data.icps);
+    set("coupon-divergence", pct(data.couponDifferent.count, data.couponComparableCount));
+    set("coupon-different-count", number.format(data.couponDifferent.count));
+    set("coupon-comparable-count", number.format(data.couponComparableCount));
+    set("coupon-different-value", money(data.couponDifferent.cents));
+    set("coupon-no-id", data.couponAudit.find((row) => row.name === "Cupom sem ID comparável")?.count?.toLocaleString("pt-BR") || "casos agrupados");
+    set("coupon-no-ambassador", data.couponAudit.find((row) => row.name === "Embaixador não informado")?.count?.toLocaleString("pt-BR") || "casos agrupados");
   }
 
   async function init() {

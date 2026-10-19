@@ -1306,6 +1306,650 @@
       "cents": 572212148
     }
   ],
+  "icp_product": [
+    {
+      "icp": "4º ano",
+      "product": "Curso Avulso",
+      "count": 66,
+      "cents": 7954088
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo Programado 1",
+      "count": 43,
+      "cents": 52540982
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo Programado 2",
+      "count": 68,
+      "cents": 78598515
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo R+",
+      "count": 86,
+      "cents": 82540094
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo R1",
+      "count": 107,
+      "cents": 122920177
+    },
+    {
+      "icp": "5º ano",
+      "product": "Curso Avulso",
+      "count": 168,
+      "cents": 21078033
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo Programado 1",
+      "count": 133,
+      "cents": 160440411
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo Programado 2",
+      "count": 169,
+      "cents": 194005296
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo R+",
+      "count": 241,
+      "cents": 235028807
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo R1",
+      "count": 252,
+      "cents": 282690696
+    },
+    {
+      "icp": "6º ano",
+      "product": "Curso Avulso",
+      "count": 203,
+      "cents": 25121081
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo Programado 1",
+      "count": 111,
+      "cents": 134247112
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo Programado 2",
+      "count": 133,
+      "cents": 134570673
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo R+",
+      "count": 238,
+      "cents": 232173335
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo R1",
+      "count": 329,
+      "cents": 368412222
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Curso Avulso",
+      "count": 145,
+      "cents": 16808563
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo Programado 1",
+      "count": 86,
+      "cents": 101764563
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo Programado 2",
+      "count": 138,
+      "cents": 144084977
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo R+",
+      "count": 301,
+      "cents": 279459645
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo R1",
+      "count": 227,
+      "cents": 252510236
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Curso Avulso",
+      "count": 185,
+      "cents": 22603289
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo Programado 1",
+      "count": 117,
+      "cents": 139305135
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo Programado 2",
+      "count": 160,
+      "cents": 166046782
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo R+",
+      "count": 349,
+      "cents": 335677066
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo R1",
+      "count": 380,
+      "cents": 425940196
+    }
+  ],
+  "icp_product_janjul2025": [
+    {
+      "icp": "4º ano",
+      "product": "Curso Avulso",
+      "count": 11,
+      "cents": 1287196
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo Programado 1",
+      "count": 10,
+      "cents": 11754794
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo Programado 2",
+      "count": 10,
+      "cents": 10671954
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo R+",
+      "count": 18,
+      "cents": 15533922
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo R1",
+      "count": 15,
+      "cents": 15687715
+    },
+    {
+      "icp": "5º ano",
+      "product": "Curso Avulso",
+      "count": 31,
+      "cents": 3908335
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo Programado 1",
+      "count": 15,
+      "cents": 17511989
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo Programado 2",
+      "count": 30,
+      "cents": 30026529
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo R+",
+      "count": 50,
+      "cents": 43417828
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo R1",
+      "count": 38,
+      "cents": 41668659
+    },
+    {
+      "icp": "6º ano",
+      "product": "Curso Avulso",
+      "count": 28,
+      "cents": 3272099
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo Programado 1",
+      "count": 17,
+      "cents": 20846151
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo Programado 2",
+      "count": 23,
+      "cents": 28562337
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo R+",
+      "count": 53,
+      "cents": 48187130
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo R1",
+      "count": 59,
+      "cents": 63688108
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Curso Avulso",
+      "count": 18,
+      "cents": 2062444
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo Programado 1",
+      "count": 18,
+      "cents": 21592045
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo Programado 2",
+      "count": 32,
+      "cents": 40757883
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo R+",
+      "count": 39,
+      "cents": 35195709
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo R1",
+      "count": 40,
+      "cents": 42651679
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Curso Avulso",
+      "count": 31,
+      "cents": 3709415
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo Programado 1",
+      "count": 22,
+      "cents": 26761644
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo Programado 2",
+      "count": 26,
+      "cents": 31556824
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo R+",
+      "count": 53,
+      "cents": 45591038
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo R1",
+      "count": 58,
+      "cents": 62036258
+    }
+  ],
+  "icp_product_janjul2026": [
+    {
+      "icp": "4º ano",
+      "product": "Curso Avulso",
+      "count": 26,
+      "cents": 3305295
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo Programado 1",
+      "count": 14,
+      "cents": 18283969
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo Programado 2",
+      "count": 25,
+      "cents": 30825197
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo R+",
+      "count": 36,
+      "cents": 33910956
+    },
+    {
+      "icp": "4º ano",
+      "product": "Extensivo R1",
+      "count": 41,
+      "cents": 48938598
+    },
+    {
+      "icp": "5º ano",
+      "product": "Curso Avulso",
+      "count": 63,
+      "cents": 7593199
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo Programado 1",
+      "count": 59,
+      "cents": 70425283
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo Programado 2",
+      "count": 72,
+      "cents": 89725931
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo R+",
+      "count": 87,
+      "cents": 89111492
+    },
+    {
+      "icp": "5º ano",
+      "product": "Extensivo R1",
+      "count": 114,
+      "cents": 128833876
+    },
+    {
+      "icp": "6º ano",
+      "product": "Curso Avulso",
+      "count": 71,
+      "cents": 9201606
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo Programado 1",
+      "count": 40,
+      "cents": 47936915
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo Programado 2",
+      "count": 59,
+      "cents": 58949144
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo R+",
+      "count": 87,
+      "cents": 86857065
+    },
+    {
+      "icp": "6º ano",
+      "product": "Extensivo R1",
+      "count": 101,
+      "cents": 113220844
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Curso Avulso",
+      "count": 69,
+      "cents": 7935344
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo Programado 1",
+      "count": 35,
+      "cents": 41431694
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo Programado 2",
+      "count": 56,
+      "cents": 57079230
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo R+",
+      "count": 142,
+      "cents": 130515940
+    },
+    {
+      "icp": "Formado R+",
+      "product": "Extensivo R1",
+      "count": 83,
+      "cents": 93515946
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Curso Avulso",
+      "count": 74,
+      "cents": 8941937
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo Programado 1",
+      "count": 43,
+      "cents": 52646381
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo Programado 2",
+      "count": 67,
+      "cents": 69994079
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo R+",
+      "count": 150,
+      "cents": 144535200
+    },
+    {
+      "icp": "Recém-formado",
+      "product": "Extensivo R1",
+      "count": 146,
+      "cents": 159138374
+    }
+  ],
+  "by_icp": [
+    {
+      "name": "Recém-formado",
+      "count": 1191,
+      "cents": 1089572468
+    },
+    {
+      "name": "6º ano",
+      "count": 1014,
+      "cents": 894524423
+    },
+    {
+      "name": "5º ano",
+      "count": 963,
+      "cents": 893243243
+    },
+    {
+      "name": "Formado R+",
+      "count": 897,
+      "cents": 794627984
+    },
+    {
+      "name": "4º ano",
+      "count": 370,
+      "cents": 344553856
+    }
+  ],
+  "event_types": [
+    {
+      "name": "Encontro Local",
+      "count": 278,
+      "cents": 258706000
+    },
+    {
+      "name": "Palestra Faculdade",
+      "count": 273,
+      "cents": 242390786
+    },
+    {
+      "name": "Congresso",
+      "count": 184,
+      "cents": 155077380
+    },
+    {
+      "name": "Workshop Regional",
+      "count": 140,
+      "cents": 124591638
+    },
+    {
+      "name": "Aula Aberta",
+      "count": 102,
+      "cents": 90857942
+    },
+    {
+      "name": "Não informado",
+      "count": 6,
+      "cents": 5179073
+    }
+  ],
+  "ambassadors": [
+    {
+      "name": "Embaixador 07",
+      "count": 61,
+      "cents": 49570057
+    },
+    {
+      "name": "Embaixador 12",
+      "count": 58,
+      "cents": 46047986
+    },
+    {
+      "name": "Embaixador 03",
+      "count": 52,
+      "cents": 43452113
+    },
+    {
+      "name": "Embaixador 20",
+      "count": 49,
+      "cents": 43328668
+    },
+    {
+      "name": "Embaixador 15",
+      "count": 45,
+      "cents": 39137416
+    },
+    {
+      "name": "Embaixador 19",
+      "count": 43,
+      "cents": 38703674
+    },
+    {
+      "name": "Embaixador 13",
+      "count": 48,
+      "cents": 37121119
+    },
+    {
+      "name": "Embaixador 08",
+      "count": 42,
+      "cents": 36813284
+    },
+    {
+      "name": "Embaixador 09",
+      "count": 40,
+      "cents": 35895010
+    },
+    {
+      "name": "Embaixador 16",
+      "count": 43,
+      "cents": 33059828
+    },
+    {
+      "name": "Embaixador 05",
+      "count": 40,
+      "cents": 32895294
+    },
+    {
+      "name": "Embaixador 02",
+      "count": 37,
+      "cents": 31899272
+    },
+    {
+      "name": "Embaixador 18",
+      "count": 32,
+      "cents": 29811619
+    },
+    {
+      "name": "Embaixador 14",
+      "count": 30,
+      "cents": 27451320
+    },
+    {
+      "name": "Embaixador 06",
+      "count": 30,
+      "cents": 26331234
+    },
+    {
+      "name": "Embaixador 04",
+      "count": 31,
+      "cents": 26321418
+    },
+    {
+      "name": "Embaixador 01",
+      "count": 26,
+      "cents": 23720933
+    },
+    {
+      "name": "Embaixador 10",
+      "count": 32,
+      "cents": 23038901
+    },
+    {
+      "name": "Embaixador 17",
+      "count": 22,
+      "cents": 17121190
+    },
+    {
+      "name": "Embaixador 11",
+      "count": 19,
+      "cents": 14191022
+    },
+    {
+      "name": "Não informado",
+      "count": 6,
+      "cents": 7523039
+    }
+  ],
+  "coupon_audit": [
+    {
+      "name": "Códigos diferentes",
+      "count": 705,
+      "cents": 589708043
+    },
+    {
+      "name": "Cupom sem ID comparável",
+      "count": 39,
+      "cents": 36977614
+    },
+    {
+      "name": "Códigos coincidentes",
+      "count": 36,
+      "cents": 29225701
+    },
+    {
+      "name": "Embaixador não informado",
+      "count": 6,
+      "cents": 7523039
+    }
+  ],
   "daily": [
     {
       "name": "2025-09-30",
@@ -1373,7 +2017,7 @@
   ],
   "quality": {
     "rows": 4435,
-    "csv_sha256": "b7be2461df8d76db66cd9bbd95e702bf0deaeb3e456b108d1e07fae7ea16e5c2",
+    "csv_sha256": "8067de80620db08b513223ee87c7e8ea88291b5ede8bdde20e5d22fbeda06b82",
     "money_formats": {
       "BR": 4319,
       "PONTO": 116

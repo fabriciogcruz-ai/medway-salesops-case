@@ -14,8 +14,26 @@ class PublishedAggregateTests(unittest.TestCase):
         for key in ('monthly', 'by_origin', 'by_product', 'monthly_origin', 'monthly_product', 'origin_product'):
             self.assertEqual(sum(r['cents'] for r in d[key]), total, key)
             self.assertEqual(sum(r['count'] for r in d[key]), 4435, key)
-        for key in ('daily_coupon', 'by_ambassador', 'by_coupon', 'by_icp', 'by_event_type', 'by_event_region'):
+        for key in ('daily_coupon', 'by_ambassador', 'by_coupon', 'by_event_type', 'by_event_region'):
             self.assertNotIn(key, d)
+        for key, expected_origin in (('event_types', 'Evento Presencial'), ('ambassadors', 'Embaixador'), ('coupon_audit', 'Embaixador')):
+            origin = next(row for row in d['by_origin'] if row['name'] == expected_origin)
+            self.assertEqual(sum(row['count'] for row in d[key]), origin['count'])
+            self.assertEqual(sum(row['cents'] for row in d[key]), origin['cents'])
+            self.assertTrue(all(row['count'] >= 5 for row in d[key]))
+        self.assertEqual(sum(row['count'] for row in d['by_icp']), d['total']['count'])
+        self.assertEqual(sum(row['cents'] for row in d['by_icp']), total)
+        self.assertTrue(all(row['count'] >= 5 for row in d['by_icp']))
+        pair_keys = ('icp_product', 'icp_product_janjul2025', 'icp_product_janjul2026')
+        for key in pair_keys:
+            self.assertEqual(len(d[key]), 25, key)
+            self.assertTrue(all(row['count'] >= 5 for row in d[key]), key)
+        self.assertEqual(sum(row['count'] for row in d['icp_product']), 4435)
+        self.assertEqual(sum(row['cents'] for row in d['icp_product']), total)
+        subsets = [{(r['icp'], r['product']): r for r in d[key]} for key in pair_keys]
+        for pair, whole in subsets[0].items():
+            residual = whole['count'] - subsets[1][pair]['count'] - subsets[2][pair]['count']
+            self.assertGreaterEqual(residual, 5, pair)
         self.assertEqual(len(d['daily']), 1)
         spike = d['daily'][0]
         self.assertEqual((spike['name'], spike['count'], spike['cents']), ('2025-09-30', 327, 312791719))

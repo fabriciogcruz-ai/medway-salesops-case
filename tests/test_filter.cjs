@@ -58,3 +58,18 @@ test('a 2025-only selection does not invent a year-over-year comparison', () => 
   assert.doesNotMatch(html, /class="yoy-col"/);
   assert.match(html, /spike-card/);
 });
+
+test('ICP × product uses safe windows and does not invent monthly intersections', () => {
+  const full = setup('2025-01', '2026-07')('icpProduct()');
+  assert.match(full, /Recém-formado × Extensivo R1/);
+  assert.match(full, /380 linhas/);
+  assert.equal((full.match(/--heat:/g) || []).length, 25);
+  const year = setup('2026-01', '2026-07')('icpProduct()');
+  assert.match(year, /146 linhas/);
+  const subset = setup('2026-06', '2026-07');
+  assert.match(subset('icpProduct()'), /Escolha acima uma janela agregada segura/);
+  assert.doesNotMatch(subset('icpProduct()'), /class="heatmap icp-product-table"/);
+  const independent = subset('state.icpProductWindow = "jj26"; icpProduct()');
+  assert.match(independent, /Janela independente do filtro mensal/);
+  assert.match(independent, /146 linhas/);
+});

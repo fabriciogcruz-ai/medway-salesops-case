@@ -13,6 +13,7 @@ const state = {
   insightsPromise: null,
   localDemo: false,
   localStatus: null,
+  icpProductWindow: null,
 };
 const $ = (id) => document.getElementById(id);
 const money = (c) =>
@@ -202,6 +203,44 @@ function matrix() {
       "",
     )}</tbody></table></div><p class="chart-foot">${Array.isArray(raw) && raw.length && cols.length === products.length ? "Cruzamento de origem e produto disponível para o histórico completo." : "Cruzamento origem × produto ainda não disponível neste agregado; exibimos a matriz origem × mês sem estimar interseções."}</p>`;
 }
+function icpProduct() {
+  const data = state.b2c;
+  const windows = [
+    { id: 'all', label: 'Histórico completo · jan/2025–jul/2026', rows: data.icp_product, from: data.monthly[0].name, to: data.monthly.at(-1).name },
+    { id: 'jj25', label: 'Jan–jul/2025', rows: data.icp_product_janjul2025, from: '2025-01', to: '2025-07' },
+    { id: 'jj26', label: 'Jan–jul/2026', rows: data.icp_product_janjul2026, from: '2026-01', to: '2026-07' },
+  ];
+  const automatic = windows.find((w) => state.from === w.from && state.to === w.to)?.id || null;
+  const selectedWindow = state.icpProductWindow || automatic;
+  const selector = `<div class="icp-product-controls"><label for="icp-product-window">Janela do cruzamento</label><select id="icp-product-window"><option value="" ${selectedWindow ? '' : 'selected'}>Escolha uma janela segura</option>${windows.map((w) => `<option value="${w.id}" ${selectedWindow === w.id ? 'selected' : ''}>${esc(w.label)}</option>`).join('')}</select></div>`;
+  if (!selectedWindow) return selector + '<p class="empty">O filtro mensal escolhido pode criar células de uma única venda no cruzamento ICP × produto. Escolha acima uma janela agregada segura; o painel não inventa a interseção para esse recorte.</p>';
+  const windowData = windows.find((w) => w.id === selectedWindow);
+  const rows = windowData?.rows || [];
+  if (!rows.length || rows.some((r) => r.count < 5)) return selector + '<p class="empty">Cruzamento indisponível para esta janela.</p>';
+  const count = sum(rows, 'count'), cents = sum(rows, 'cents');
+  const expected = selectedWindow === 'all' ? data.total : {
+    count: sum(data.monthly.filter((r) => r.name >= windowData.from && r.name <= windowData.to), 'count'),
+    cents: sum(data.monthly.filter((r) => r.name >= windowData.from && r.name <= windowData.to), 'cents'),
+  };
+  if (count !== expected.count || cents !== expected.cents) return selector + '<p class="empty">Totais divergentes; cruzamento suspenso.</p>';
+  const byIcp = (name) => rows.filter((r) => r.icp === name);
+  const byProduct = (name) => rows.filter((r) => r.product === name);
+  const icps = [...new Set(rows.map((r) => r.icp))].sort((a, b) => sum(byIcp(b), 'cents') - sum(byIcp(a), 'cents'));
+  const products = [...new Set(rows.map((r) => r.product))].sort((a, b) => sum(byProduct(b), 'cents') - sum(byProduct(a), 'cents'));
+  const max = Math.max(...rows.map((r) => r.cents), 1);
+  const top = [...rows].sort((a, b) => b.cents - a.cents)[0];
+  const note = state.icpProductWindow && state.icpProductWindow !== automatic
+    ? `Janela independente do filtro mensal acima: ${windowData.label}.`
+    : `Mesmo recorte do filtro B2C: ${windowData.label}.`;
+  const matrixRows = icps.map((icp) => `<tr><th scope="row">${esc(icp)}</th>${products.map((product) => {
+    const r = rows.find((x) => x.icp === icp && x.product === product);
+    const heat = .12 + .8 * (r.cents / max);
+    return `<td style="--heat:${heat.toFixed(3)}" tabindex="0" data-tip="${esc(icp)} × ${esc(product)} · ${money(r.cents)} · ${integer(r.count)} registros · média ${money(r.cents/r.count)}"><span class="sr-only">${esc(icp)} × ${esc(product)}: </span>${short(r.cents)}<small>${integer(r.count)} linhas</small></td>`;
+  }).join('')}<td class="icp-total">${short(sum(byIcp(icp), 'cents'))}<small>${integer(sum(byIcp(icp), 'count'))} linhas</small></td></tr>`).join('');
+  const footer = `<tr><th scope="row">Total produto</th>${products.map((p) => `<td>${short(sum(byProduct(p), 'cents'))}<small>${integer(sum(byProduct(p), 'count'))} linhas</small></td>`).join('')}<td>${short(cents)}<small>${integer(count)} linhas</small></td></tr>`;
+  const details = rows.map((r) => `<tr><th scope="row">${esc(r.icp)}</th><td>${esc(r.product)}</td><td>${integer(r.count)}</td><td>${money(r.cents)}</td><td>${money(r.cents/r.count)}</td></tr>`).join('');
+  return selector + `<p class="matrix-caption">${esc(note)} Maior célula por valor: <strong>${esc(top.icp)} × ${esc(top.product)}</strong> · ${integer(top.count)} linhas · ${money(top.cents)}.</p><div class="heat-scroll"><table class="heatmap icp-product-table"><caption class="sr-only">ICP por produto, ${esc(windowData.label)}</caption><thead><tr><th scope="col">ICP / produto</th>${products.map((p) => `<th scope="col">${esc(p.replace('Extensivo ', 'Ext. ').replace('Programado ', 'Prog. '))}</th>`).join('')}<th scope="col">Total ICP</th></tr></thead><tbody>${matrixRows}</tbody><tfoot>${footer}</tfoot></table></div><details class="chart-data"><summary>Ver 25 células com valores e médias exatas</summary><div class="chart-data-scroll"><table><caption>Valor pago e média por linha · ${esc(windowData.label)}</caption><thead><tr><th scope="col">ICP</th><th scope="col">Produto</th><th scope="col">Linhas</th><th scope="col">Valor pago</th><th scope="col">Média/linha</th></tr></thead><tbody>${details}</tbody></table></div></details><p class="chart-foot">Interseção real das colunas ICP e produto do CSV. A cor representa valor pago, não conversão ou rentabilidade. Cada célula publicada reúne ao menos cinco linhas; janelas mensais menores não são expostas.</p>`;
+}
 function quality() {
   const q = state.b2c.quality || {},
     items = (q.monthly || []).filter((r) => r.month >= state.from && r.month <= state.to),
@@ -273,14 +312,14 @@ function overview() {
       "A leitura conjunta separa vendas B2C no período e valor mensal contratado B2B na fotografia atual.",
     ) +
     `<div class="kpis">${kpi("B2C / VALOR PAGO", short(cents), `${longMonth(state.from)} — ${longMonth(state.to)} · ${integer(count)} registros`, true)}${kpi("B2B / VALOR MENSAL", short(b.active_monthly_cents), `${integer(b.active_contracts)} contratos ativos · ${integer(b.active_licenses)} licenças`)}</div>` +
-    `<div class="story-thesis"><span class="micro">RESPOSTA PARA A GESTÃO</span><h3>Mais valor vendido não prova crescimento eficiente.</h3><p>${spikeInRange() ? "Antes de aumentar o investimento em aquisição, auditar o pico e medir margem/CAC por origem e produto." : "Antes de aumentar o investimento em aquisição, medir margem/CAC por origem e produto no período selecionado."} Em paralelo, acompanhar os contratos que concentram o valor mensal B2B.</p></div>` +
+    `<div class="story-thesis"><span class="micro">RESPOSTA PARA A GESTÃO</span><h3>Mais valor vendido não prova crescimento eficiente.</h3><p>${spikeInRange() ? "Antes de mudar prioridades comerciais, auditar o pico e medir margem por origem e produto." : "Antes de mudar prioridades comerciais, medir margem por origem e produto no período selecionado."} Em paralelo, acompanhar os contratos que concentram o valor mensal B2B.</p></div>` +
     `<div class="signal-grid" aria-label="Evidências do recorte selecionado e exposição B2B">` +
-    (pairs.length ? `<article class="signal-card"><span>01 / MOTOR DO CRESCIMENTO</span><strong>${growth(vCurrent, vOld)}</strong><p>Valor B2C nos meses de 2026 filtrados contra os mesmos meses de 2025 como referência. A contagem cresceu ${growth(nCurrent, nOld)}; o valor médio por registro, ${growth(vCurrent / nCurrent, vOld / nOld)}.</p><small>Decisão: validar capacidade, margem e custo antes de ampliar verba.</small></article>` : `<article class="signal-card"><span>01 / COMPARAÇÃO ANUAL</span><strong>—</strong><p>Não há meses de 2026 no filtro com referência em 2025.</p></article>`) +
+    (pairs.length ? `<article class="signal-card"><span>01 / MOTOR DO CRESCIMENTO</span><strong>${growth(vCurrent, vOld)}</strong><p>Valor B2C nos meses de 2026 filtrados contra os mesmos meses de 2025 como referência. A contagem cresceu ${growth(nCurrent, nOld)}; o valor médio por registro, ${growth(vCurrent / nCurrent, vOld / nOld)}.</p><small>Decisão: validar capacidade e margem antes de alterar prioridades comerciais.</small></article>` : `<article class="signal-card"><span>01 / COMPARAÇÃO ANUAL</span><strong>—</strong><p>Não há meses de 2026 no filtro com referência em 2025.</p></article>`) +
     (spikeInRange() ? `<article class="signal-card"><span>02 / ALERTA DE LEITURA</span><strong>${percent(spike.cents, sep.cents, 2)}</strong><p>Do valor de setembro/2025 aparece em 30/09, com registros nas quatro origens. A causa não está demonstrada pelo CSV.</p><small>Decisão: conferir pedidos, pagamentos e calendário antes de usar o mês como referência.</small></article>` : "") +
     `<article class="signal-card"><span>03 / EXPOSIÇÃO B2B</span><strong>${overlapHeadline}</strong><p>${overlap.length ? `${integer(overlapCount)} contratos Enterprise em SP concentram essa parcela do valor mensal ativo.` : "Cruzamento plano × região não disponível nesta coleta."} Plano e região são dimensões sobrepostas.</p><small>Decisão: acompanhar vigência e risco das contas materiais.</small></article>` +
     `</div>` +
     `${panel("Comparação B2C nos meses equivalentes", "Meses de 2026 no filtro × mesmos meses de 2025 como referência", yoy(), true)}` +
-    `<div class="decision-stack"><div class="decision-title"><span class="micro">ORDEM DE AÇÃO</span><h3>O que fazer antes da próxima decisão de investimento</h3></div><ol>${spikeInRange() ? "<li><strong>Primeiro: auditar o pico.</strong> Confirmar data de pagamento, pedidos e origem de 30/09; não transformá-lo em meta ou sazonalidade sem validação.</li>" : ""}<li><strong>Medir a economia do crescimento.</strong> Cruzar valor por origem/produto com margem, CAC e conversão antes de redistribuir orçamento.</li><li><strong>Em paralelo: proteger a carteira B2B.</strong> Mapear vigência, uso de licenças e responsáveis pelos contratos de maior peso.</li></ol></div>` +
+    `<div class="decision-stack"><div class="decision-title"><span class="micro">ORDEM DE AÇÃO</span><h3>O que validar antes de mudar operação e prioridades</h3></div><ol>${spikeInRange() ? "<li><strong>Primeiro: auditar o pico.</strong> Confirmar data de pagamento, pedidos e origem de 30/09; não transformá-lo em meta ou sazonalidade sem validação.</li>" : ""}<li><strong>Medir a economia do crescimento.</strong> Cruzar valor por origem/produto com margem, perfil e conversão antes de priorizar ações comerciais.</li><li><strong>Em paralelo: proteger a carteira B2B.</strong> Mapear vigência, uso de licenças e responsáveis pelos contratos de maior peso.</li></ol></div>` +
     `<div class="scope-strip"><div><span>FLUXO · B2C</span><p>Valor pago <strong>no período selecionado</strong>.</p></div><span class="scope-divider" aria-hidden="true">≠</span><div><span>ESTOQUE · B2B</span><p>Valor mensal <strong>dos contratos ativos no snapshot</strong>.</p></div><div class="scope-warning">Não somar como receita total.</div></div>` +
     `<p class="fine-print">CSV B2C é a fonte histórica recebida; B2B é atualizado por coleta agendada. ${esc(b2bNotice())} Explore as abas B2C e B2B para cortes detalhados.</p>`
   );
@@ -297,7 +336,7 @@ function b2cView() {
       "Vendas B2C. <span>O que move o valor?</span>",
       "Volume, ticket, sazonalidade e mix — com o mesmo cuidado para o dado atípico e o dado imperfeito.",
     ) +
-    `<div class="kpis kpis-four">${kpi("VALOR PAGO", short(c), `${longMonth(state.from)} — ${longMonth(state.to)}`, true)}${kpi("REGISTROS", integer(n), "Linhas, não clientes únicos")}${kpi("MÉDIA / REGISTRO", n ? money(c / n) : "—", "Inclui os valores zero/negativo quando presentes no recorte")}${kpi("ORIGEM LÍDER", esc(origins[0]?.name || "—"), origins[0] ? `${percent(origins[0].cents, c)} do valor no recorte` : "Sem dados")}</div><div class="panel-grid">${panel("Comparação de meses equivalentes", "Meses de 2026 no filtro × mesmos meses de 2025 como referência", yoy(), true)}${panel("Ponte de crescimento", "Meses de 2026 filtrados × 2025 como referência", bridge(), true)}${panel("Valor ao longo do tempo", "B2C · cada mês no recorte selecionado", trend(rows), true)}${panel("Mapa de concentração", "Leitura cruzada das origens", matrix(), true)}${panel("Origens por valor", "Ranking · período selecionado", ranking(origins))}${panel("Produtos por valor", "Ranking · período selecionado", ranking(products))}${panel("Integridade do dado", "Exceções e linhas preservadas · período selecionado", quality(), true)}</div>${spike()}${spikeInRange() ? note("Pico não é estratégia por si só.", "A concentração de 30/09/2025 exige testar origem, produto e cupom no nível diário antes de replicar ações. O CSV não contém custos de aquisição, margem ou evidência causal.") : ""}`
+    `<div class="kpis kpis-four">${kpi("VALOR PAGO", short(c), `${longMonth(state.from)} — ${longMonth(state.to)}`, true)}${kpi("REGISTROS", integer(n), "Linhas, não clientes únicos")}${kpi("MÉDIA / REGISTRO", n ? money(c / n) : "—", "Inclui os valores zero/negativo quando presentes no recorte")}${kpi("ORIGEM LÍDER", esc(origins[0]?.name || "—"), origins[0] ? `${percent(origins[0].cents, c)} do valor no recorte` : "Sem dados")}</div><div class="panel-grid">${panel("Comparação de meses equivalentes", "Meses de 2026 no filtro × mesmos meses de 2025 como referência", yoy(), true)}${panel("Ponte de crescimento", "Meses de 2026 filtrados × 2025 como referência", bridge(), true)}${panel("Valor ao longo do tempo", "B2C · cada mês no recorte selecionado", trend(rows), true)}${panel("Mapa de concentração", "Leitura cruzada das origens", matrix(), true)}${panel("Origens por valor", "Ranking · período selecionado", ranking(origins))}${panel("Produtos por valor", "Ranking · período selecionado", ranking(products))}${panel("ICP × produto", "Cruzamento real do CSV · janelas seguras e valores exatos", icpProduct(), true)}${panel("Integridade do dado", "Exceções e linhas preservadas · período selecionado", quality(), true)}</div>${spike()}${spikeInRange() ? note("Pico não é estratégia por si só.", "A concentração de 30/09/2025 exige testar origem, produto e cupom no nível diário antes de replicar ações. O CSV não contém custos de aquisição, margem ou evidência causal.") : ""}`
   );
 }
 function cohort() {
@@ -403,6 +442,16 @@ function render() {
   } else {
     $("content").innerHTML = state.view === "b2c" ? b2cView() : state.view === "b2b" ? b2bView() : overview();
   }
+  const pairSelect = $("icp-product-window");
+  if (pairSelect) pairSelect.addEventListener("change", () => {
+    state.icpProductWindow = pairSelect.value || null;
+    render();
+  });
+  const jumpToMatrix = document.querySelector(".jump-b2c");
+  if (jumpToMatrix) jumpToMatrix.addEventListener("click", () => {
+    document.querySelector('.tab[data-view="b2c"]').click();
+    requestAnimationFrame(() => $("icp-product-window")?.closest("article.panel")?.scrollIntoView({ block: "start" }));
+  });
   $("source-health").textContent = state.b2bLive
     ? "B2B · API consultada"
     : b2bStale()
@@ -602,6 +651,7 @@ async function init() {
       $(id).addEventListener("change", () => {
         state.from = $("from").value;
         state.to = $("to").value;
+        state.icpProductWindow = null;
         if (state.from > state.to) {
           state[id === "from" ? "to" : "from"] = state[id];
           $("from").value = state.from;

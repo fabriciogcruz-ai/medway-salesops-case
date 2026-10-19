@@ -5,10 +5,21 @@ from decimal import Decimal
 from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-from pipeline import CSV_PATH, load_b2c, parse_date, parse_money, summarize_b2b, atomic_json, public_b2c_view
+from pipeline import CSV_PATH, load_b2c, parse_date, parse_money, summarize_b2b, atomic_json, public_b2c_view, canonical_ambassador, safe_rank
 
 
 class ParsingTests(unittest.TestCase):
+    def test_ambassador_aliases_and_rare_pooling(self):
+        self.assertEqual(canonical_ambassador(' embaixador  05 '), 'Embaixador 05')
+        self.assertEqual(canonical_ambassador('Embaixador 5'), 'Embaixador 05')
+        self.assertEqual(canonical_ambassador('Nome livre'), 'Outros embaixadores')
+        rows = [{'name': 'A', 'count': 1, 'cents': 100}, {'name': 'B', 'count': 6, 'cents': 600}, {'name': 'C', 'count': 20, 'cents': 2000}]
+        public = safe_rank(rows)
+        self.assertEqual(sum(r['count'] for r in public), 27)
+        self.assertEqual(sum(r['cents'] for r in public), 2700)
+        self.assertTrue(all(r['count'] >= 5 for r in public))
+        self.assertEqual(next(r['count'] for r in public if r['name'] == 'Outros (agrupados)'), 7)
+
     def test_money_formats(self):
         self.assertEqual(parse_money('R$ 6.333,42'), (Decimal('6333.42'), 'BR'))
         self.assertEqual(parse_money('14174.34'), (Decimal('14174.34'), 'PONTO'))
@@ -41,6 +52,26 @@ class ParsingTests(unittest.TestCase):
         self.assertEqual(sum(x['cents'] for x in result['origin_product']), result['total']['cents'])
         day = next(x for x in result['daily'] if x['name'] == '2025-09-30')
         self.assertEqual((day['count'], day['cents']), (327, 312791719))
+
+    @unittest.skipUnless((CSV_PATH.parent / 'b2c-demo.csv').exists(), 'Cópia local privada indisponível no CI')
+    def test_local_demo_dimensions_reconcile(self):
+        full, quality = load_b2c(CSV_PATH.parent / 'b2c-demo.csv')
+        safe, _ = public_b2c_view(full, quality)
+        event = next(x for x in safe['event_types'] if x['name'] == 'Encontro Local')
+        ambassador = next(x for x in safe['ambassadors'] if x['name'] == 'Embaixador 07')
+        icp = next(x for x in safe['by_icp'] if x['name'] == 'Recém-formado')
+        self.assertEqual((event['count'], event['cents']), (278, 258706000))
+        self.assertEqual((ambassador['count'], ambassador['cents']), (61, 49570057))
+        self.assertEqual((icp['count'], icp['cents']), (1191, 1089572468))
+        audit = {row['name']: row for row in safe['coupon_audit']}
+        self.assertEqual((audit['Códigos diferentes']['count'], audit['Códigos diferentes']['cents']), (705, 589708043))
+        self.assertEqual(audit['Códigos coincidentes']['count'], 36)
+        self.assertEqual(audit['Cupom sem ID comparável']['count'], 39)
+        self.assertEqual(audit['Embaixador não informado']['count'], 6)
+        whole = next(r for r in safe['icp_product'] if r['icp'] == 'Recém-formado' and r['product'] == 'Extensivo R1')
+        current = next(r for r in safe['icp_product_janjul2026'] if r['icp'] == 'Recém-formado' and r['product'] == 'Extensivo R1')
+        self.assertEqual((whole['count'], whole['cents']), (380, 425940196))
+        self.assertEqual((current['count'], current['cents']), (146, 159138374))
 
     @unittest.skipUnless(CSV_PATH.exists(), 'CSV bruto não publicado; teste de minimização requer fonte local')
     def test_public_view_minimizes_granularity(self):

@@ -63,6 +63,42 @@ def summarize(items: list[dict], dimension: str, measure: str = 'cents') -> list
         grouped[key][1] += row[measure]
     return [{'name': k, 'count': n, 'cents': total} for k, (n, total) in sorted(grouped.items())]
 
+def summarize_icp_product(items: list[dict]) -> list[dict]:
+    grouped = collections.defaultdict(lambda: [0, 0])
+    for row in items:
+        key = (row['icp'], row['produto'])
+        grouped[key][0] += 1
+        grouped[key][1] += row['cents']
+    return [{'icp': icp, 'product': product, 'count': values[0], 'cents': values[1]}
+            for (icp, product), values in sorted(grouped.items())]
+
+def canonical_ambassador(raw: str) -> str:
+    """Normalize pseudonymous codes; never expose an arbitrary personal name."""
+    s = ' '.join(raw.strip().split())
+    if not s:
+        return 'Não informado'
+    match = re.fullmatch(r'embaixador\s*0*(\d+)', s, flags=re.IGNORECASE)
+    return f'Embaixador {int(match.group(1)):02d}' if match else 'Outros embaixadores'
+
+def safe_rank(rows: list[dict], minimum: int = 5) -> list[dict]:
+    """Pool low-count cells, including complementary suppression when needed."""
+    safe = [dict(row) for row in rows if row['count'] >= minimum]
+    rare = [row for row in rows if row['count'] < minimum]
+    if rare:
+        pooled = {'name': 'Outros (agrupados)', 'count': sum(row['count'] for row in rare),
+                  'cents': sum(row['cents'] for row in rare)}
+        while pooled['count'] < minimum and safe:
+            moved = min(safe, key=lambda row: row['count'])
+            safe.remove(moved)
+            pooled['count'] += moved['count']
+            pooled['cents'] += moved['cents']
+        if pooled['count'] < minimum:
+            raise ValueError('dimensão inteira abaixo do limiar de publicação')
+        safe.append(pooled)
+    if any(row['count'] < minimum for row in safe):
+        raise ValueError('célula pequena em dimensão pública')
+    return sorted(safe, key=lambda row: (-row['cents'], row['name']))
+
 
 def load_b2c(path: Path) -> tuple[dict, dict]:
     data = path.read_bytes()
@@ -92,11 +128,21 @@ def load_b2c(path: Path) -> tuple[dict, dict]:
                 'quarter': f'{date.year}-Q{(date.month - 1) // 3 + 1}',
                 'origem': norm['origem'], 'produto': norm['produto'],
                 'icp': norm['icp_comprador'], 'cupom': norm['cupom'],
-                'embaixador': norm['embaixador'] or 'Não aplicável',
-                'tipo_evento': norm['tipo_evento'] or 'Não aplicável',
+                'embaixador': canonical_ambassador(norm['embaixador']) if norm['origem'] == 'Embaixador' else 'Não aplicável',
+                'tipo_evento': norm['tipo_evento'] or ('Não informado' if norm['origem'] == 'Evento Presencial' else 'Não aplicável'),
                 'regiao_evento': region,
                 'cents': cents(amount),
             }
+            if norm['origem'] == 'Embaixador':
+                coupon_id = re.fullmatch(r'embaixador[-_\s]*0*(\d+)', norm['cupom'], flags=re.IGNORECASE)
+                if record['embaixador'] == 'Não informado':
+                    record['coupon_status'] = 'Embaixador não informado'
+                elif not coupon_id:
+                    record['coupon_status'] = 'Cupom sem ID comparável'
+                elif record['embaixador'] == f'Embaixador {int(coupon_id.group(1)):02d}':
+                    record['coupon_status'] = 'Códigos coincidentes'
+                else:
+                    record['coupon_status'] = 'Códigos diferentes'
             if amount <= 0:
                 exceptions.append({'line': line, 'type': 'negative' if amount < 0 else 'zero', 'cents': cents(amount), 'date': date.isoformat()})
             records.append(record)
@@ -146,17 +192,29 @@ def load_b2c(path: Path) -> tuple[dict, dict]:
         'by_ambassador': summarize(records, 'embaixador'),
         'by_event_type': summarize(records, 'tipo_evento'),
         'by_event_region': summarize(records, 'regiao_evento'),
+        'event_types': summarize([r for r in records if r['origem'] == 'Evento Presencial'], 'tipo_evento'),
+        'ambassadors': summarize([r for r in records if r['origem'] == 'Embaixador'], 'embaixador'),
+        'coupon_audit': summarize([r for r in records if r['origem'] == 'Embaixador'], 'coupon_status'),
         'monthly_origin': [{'month': m, 'name': n, 'count': v[0], 'cents': v[1]} for (m, n), v in sorted(monthly_origin.items())],
         'monthly_product': [{'month': m, 'name': n, 'count': v[0], 'cents': v[1]} for (m, n), v in sorted(monthly_product.items())],
         'daily_origin': [{'date': d, 'name': n, 'count': v[0], 'cents': v[1]} for (d, n), v in sorted(daily_origin.items())],
         'daily_product': [{'date': d, 'name': n, 'count': v[0], 'cents': v[1]} for (d, n), v in sorted(daily_product.items())],
         'daily_coupon': [{'date': d, 'name': n, 'count': v[0], 'cents': v[1]} for (d, n), v in sorted(daily_coupon.items())],
         'origin_product': [{'origin': o, 'product': p, 'count': v[0], 'cents': v[1]} for (o, p), v in sorted(origin_product.items())],
+        'icp_product': summarize_icp_product(records),
+        'icp_product_janjul2025': summarize_icp_product([r for r in records if '2025-01' <= r['month'] <= '2025-07']),
+        'icp_product_janjul2026': summarize_icp_product([r for r in records if '2026-01' <= r['month'] <= '2026-07']),
         'quality': quality,
     }
     assert sum(x['cents'] for x in months) == all_total
     assert sum(x['count'] for x in result['by_origin']) == len(records)
     assert sum(x['cents'] for x in result['by_product']) == all_total
+    assert sum(x['count'] for x in result['icp_product']) == len(records)
+    assert sum(x['cents'] for x in result['icp_product']) == all_total
+    origin_counts = {x['name']: x['count'] for x in result['by_origin']}
+    assert sum(x['count'] for x in result['event_types']) == origin_counts.get('Evento Presencial', 0)
+    assert sum(x['count'] for x in result['ambassadors']) == origin_counts.get('Embaixador', 0)
+    assert sum(x['count'] for x in result['coupon_audit']) == origin_counts.get('Embaixador', 0)
     return result, quality
 
 
@@ -167,6 +225,18 @@ def public_b2c_view(result: dict, quality: dict) -> tuple[dict, dict]:
         'source', 'period', 'total', 'monthly', 'by_origin', 'by_product',
         'monthly_origin', 'monthly_product', 'origin_product',
     )}
+    pair_keys = ('icp_product', 'icp_product_janjul2025', 'icp_product_janjul2026')
+    if any(row['count'] < 5 for key in pair_keys for row in result[key]):
+        raise ValueError('célula pequena no cruzamento ICP × produto')
+    # The implied Aug–Dec/2025 complement must also meet the same threshold.
+    pairs = [{(r['icp'], r['product']): r['count'] for r in result[key]} for key in pair_keys]
+    if any(total - pairs[1].get(pair, 0) - pairs[2].get(pair, 0) < 5
+           for pair, total in pairs[0].items()):
+        raise ValueError('resíduo pequeno ao subtrair janelas ICP × produto')
+    for key in pair_keys:
+        safe[key] = result[key]
+    for key in ('by_icp', 'event_types', 'ambassadors', 'coupon_audit'):
+        safe[key] = safe_rank(result[key])
     safe['daily'] = [row for row in result['daily'] if row['name'] == anchor]
     safe['daily_origin'] = [row for row in result['daily_origin'] if row['date'] == anchor]
     safe['daily_product'] = [row for row in result['daily_product'] if row['date'] == anchor]

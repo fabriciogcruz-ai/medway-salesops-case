@@ -16,6 +16,14 @@ test('insight drivers reconcile both dimensions to the same B2C increase', () =>
   assert.equal(d.productPairDelta, 614920245);
   assert.equal(d.course.count2026, 303);
   assert.equal(d.courseDelta, 22737892);
+  assert.deepEqual([d.eventTypes[0].name, d.eventTypes[0].count, d.eventTypes[0].cents], ['Encontro Local', 278, 258706000]);
+  assert.deepEqual([d.ambassadors[0].name, d.ambassadors[0].count, d.ambassadors[0].cents], ['Embaixador 07', 61, 49570057]);
+  assert.deepEqual([d.icps[0].name, d.icps[0].count, d.icps[0].cents], ['Recém-formado', 1191, 1089572468]);
+  assert.deepEqual([d.topIcpProduct.icp, d.topIcpProduct.product, d.topIcpProduct.count, d.topIcpProduct.cents], ['Recém-formado', 'Extensivo R1', 380, 425940196]);
+  assert.equal(d.couponDifferent.count, 705);
+  assert.equal(d.couponDifferent.cents, 589708043);
+  assert.equal(d.couponComparableCount, 741);
+  assert.equal(d.couponAudit.reduce((n, x) => n + x.count, 0), 786);
   const sourceCell = b2b.plan_region.find((r) => r.plan === 'Institucional Enterprise' && r.region === 'SP');
   assert.deepEqual(d.b2bCell, sourceCell);
   assert.equal(d.b2bActiveCents, b2b.active_monthly_cents);
@@ -31,9 +39,12 @@ test('Insights is a fourth in-place tab, and old deep link redirects to it', () 
   assert.match(home, /insights\.js\?v=/);
   assert.match(page, /location\.replace\("index\.html\?view=insights"\)/);
   assert.match(fs.readFileSync(path.join(root, 'public/app.js'), 'utf8'), /state\.view === "b2b" \|\| state\.view === "insights"/);
-  assert.match(page, /HIPÓTESE, NÃO ROI MEDIDO/);
-  assert.match(page, /Não existe “melhor canal de Ads” demonstrado aqui/);
-  assert.doesNotMatch(page, /invista R\$|ROI de \d/);
+  assert.match(page, /Cinco decisões sustentadas por evidência/);
+  assert.match(page, /ALERTA DE ATRIBUIÇÃO · EMBAIXADOR × CUPOM/);
+  assert.match(page, /Sem o de-para oficial/);
+  assert.match(page, /Maior valor pago não prova maior eficiência/);
+  assert.match(page, /class="jump-b2c"/);
+  assert.doesNotMatch(page, /\bAds\b|mídia|piloto de busca/i);
 });
 
 test('fails closed if a source dimension stops reconciling', () => {

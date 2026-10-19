@@ -2,7 +2,7 @@
   --navy: #00205b;
   --blue: #103c78;
   --aqua: #01cfb5;
-  --aqua-deep: #007f73;
+  --aqua-deep: #01cfb5;
   --ink: #122d51;
   --muted: #5b718a;
   --line: #dce5ee;
@@ -730,7 +730,7 @@ select {
   white-space: nowrap;
 }
 .heatmap td {
-  background: rgba(1, 171, 154, var(--heat));
+  background: rgba(1, 207, 181, var(--heat));
   color: var(--navy);
   text-align: center;
   padding: 13px 3px;
@@ -1661,3 +1661,26 @@ footer a {
   .demo-banner { display: block; }
   .demo-banner span { display: block; text-align: left; margin-top: 3px; }
 }
+/* Brand green stays exact on accents/dark surfaces; navy carries text on white. */
+:focus-visible, [data-tip]:focus-visible { outline-color: var(--navy); }
+.brand-name span, .scope-divider, .legend strong, .bridge-operator,
+.editorial-icon, .method-grid span, .method-details summary span { color: var(--navy); }
+.hero h1 span, .section-lead h2 span, .method h2 span {
+  color: var(--navy);
+  text-decoration: underline;
+  text-decoration-color: var(--aqua);
+  text-decoration-thickness: .09em;
+  text-underline-offset: .13em;
+}
+.chart-callout { fill: var(--navy); }
+.icp-product-controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 6px 0 18px; }
+.icp-product-controls label { font-size: 11px; font-weight: 800; color: var(--navy); }
+.icp-product-controls select { max-width: min(330px, 100%); min-width: 245px; font-size: 12px; border-color: #9bb3c8; }
+.icp-product-table { min-width: 890px; font-variant-numeric: tabular-nums; }
+.icp-product-table th:first-child { min-width: 135px; }
+.icp-product-table td { min-width: 120px; font-weight: 700; }
+.icp-product-table td small { display: block; margin-top: 5px; font-size: 9px; font-weight: 500; color: var(--navy); }
+.icp-product-table .icp-total { background: #eaf4f8; }
+.panel:has(#icp-product-window) { scroll-margin-top: 18px; }
+.icp-product-table tfoot th, .icp-product-table tfoot td { border-top: 2px solid var(--navy); background: #eef5f8; font-weight: 800; }
+@media (max-width: 700px) { .icp-product-controls { display: block; } .icp-product-controls label { display: block; margin-bottom: 6px; } .icp-product-controls select { width: 100%; min-width: 0; } }
