@@ -164,6 +164,9 @@ for i,(title,body) in enumerate([
     y=2.13+i*1.31;rect(s,.76,y,11.73,1.12,RGBColor(18,68,108))
     txt(s,title,1.04,y+.24,2.10,.39,18,AQUA,True)
     txt(s,body,3.25,y+.16,8.73,.82,16,WHITE)
+link='https://fabriciogcruz-ai.github.io/medway-salesops-case/'
+link_shape=txt(s,'Dashboard · B2C | B2B | conjunto: fabriciogcruz-ai.github.io/medway-salesops-case/',.83,6.00,11.6,.36,14,AQUA,True)
+link_shape.click_action.hyperlink.address=link
 txt(s,'Nenhuma recomendação depende de ROI, churn ou MRR histórico inventados.',.83,6.40,11.6,.36,15,WHITE)
 
 # APPENDIX 1 — product/origin mix, out of video.
