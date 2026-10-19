@@ -1651,20 +1651,7 @@ footer a {
   color: var(--navy);
   background: #f3f7fa;
 }
-.insights-entry {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  margin: 15px 0 3px 17px;
-  padding: 9px 0;
-  color: var(--aqua-deep);
-  font-weight: 800;
-  font-size: 11px;
-  text-decoration: none;
-  border-bottom: 2px solid var(--aqua-deep);
-}
-.insights-entry span { font-size: 16px; line-height: 1; }
-.insights-entry:hover { color: var(--navy); border-color: var(--navy); }
+.hero[hidden] { display: none; }
 @media (max-width: 700px) {
-  .insights-entry { margin: 7px 0 0; padding: 5px 0; }
+  .tabs .tab { min-width: 0; padding: 9px 4px; font-size: 10px; line-height: 1.25; }
 }

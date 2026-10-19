@@ -104,6 +104,7 @@
       console.error("Falha ao carregar insights", error);
     }
   }
+  root.MedwayInsights = { computeInsights, render };
   if (typeof module !== "undefined" && module.exports) module.exports = { computeInsights };
   if (typeof document !== "undefined" && document.getElementById("hero-delta")) init();
 })(typeof window !== "undefined" ? window : globalThis);

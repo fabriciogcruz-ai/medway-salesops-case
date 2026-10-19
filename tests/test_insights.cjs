@@ -22,11 +22,15 @@ test('insight drivers reconcile both dimensions to the same B2C increase', () =>
   assert.ok(d.b2bCell.active_monthly_cents <= d.b2bActiveCents);
 });
 
-test('page links are reciprocal, and Ads recommendation is explicitly conditional', () => {
+test('Insights is a fourth in-place tab, and old deep link redirects to it', () => {
   const page = fs.readFileSync(path.join(root, 'public/insights.html'), 'utf8');
   const home = fs.readFileSync(path.join(root, 'public/index.html'), 'utf8');
-  assert.match(home, /href="insights\.html"/);
-  assert.match(page, /href="index\.html"/);
+  assert.match(home, /data-view="insights"/);
+  assert.equal((home.match(/data-view="(?:overview|b2c|b2b|insights)"/g) || []).length, 4);
+  assert.doesNotMatch(home, /class="insights-entry"/);
+  assert.match(home, /insights\.js\?v=/);
+  assert.match(page, /location\.replace\("index\.html\?view=insights"\)/);
+  assert.match(fs.readFileSync(path.join(root, 'public/app.js'), 'utf8'), /state\.view === "b2b" \|\| state\.view === "insights"/);
   assert.match(page, /HIPÓTESE, NÃO ROI MEDIDO/);
   assert.match(page, /Não existe “melhor canal de Ads” demonstrado aqui/);
   assert.doesNotMatch(page, /invista R\$|ROI de \d/);

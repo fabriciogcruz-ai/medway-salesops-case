@@ -9,6 +9,8 @@ const state = {
   view: "overview",
   from: null,
   to: null,
+  insightsMarkup: null,
+  insightsPromise: null,
 };
 const $ = (id) => document.getElementById(id);
 const money = (c) =>
@@ -384,13 +386,21 @@ function render() {
     if (active) t.setAttribute("aria-current", "page");
     else t.removeAttribute("aria-current");
   });
-  $("control-bar").hidden = state.view === "b2b";
-  $("content").innerHTML =
-    state.view === "b2c"
-      ? b2cView()
-      : state.view === "b2b"
-        ? b2bView()
-        : overview();
+  document.querySelector(".hero").hidden = state.view === "insights";
+  $("control-bar").hidden = state.view === "b2b" || state.view === "insights";
+  if (state.view === "insights") {
+    $("content").innerHTML = state.insightsMarkup || '<p class="loading">Carregando insights…</p>';
+    if (state.insightsMarkup) {
+      try {
+        window.MedwayInsights.render(window.MedwayInsights.computeInsights(state.b2c, state.b2b));
+      } catch (error) {
+        $("insight-error").hidden = false;
+        console.error("Insights indisponíveis", error);
+      }
+    }
+  } else {
+    $("content").innerHTML = state.view === "b2c" ? b2cView() : state.view === "b2b" ? b2bView() : overview();
+  }
   $("source-health").textContent = state.b2bLive
     ? "B2B · API consultada"
     : b2bStale()
@@ -411,6 +421,26 @@ async function getJson(url) {
   let r = await fetch(url, { cache: "no-store" });
   if (!r.ok) throw Error(`${url}: ${r.status}`);
   return r.json();
+}
+async function loadInsightsMarkup() {
+  if (state.insightsMarkup) return;
+  if (!state.insightsPromise) {
+    state.insightsPromise = (async () => {
+      const response = await fetch("insights.html", { cache: "no-store" });
+      if (!response.ok) throw new Error(`insights.html: ${response.status}`);
+      const parsed = new DOMParser().parseFromString(await response.text(), "text/html");
+      const main = parsed.querySelector("main#main");
+      if (!main || !main.querySelector("#hero-delta")) throw new Error("Template de insights inválido");
+      state.insightsMarkup = [...main.children]
+        .filter((element) => !element.classList.contains("insight-return"))
+        .map((element) => element.outerHTML)
+        .join("");
+    })().catch((error) => {
+      state.insightsPromise = null;
+      throw error;
+    });
+  }
+  return state.insightsPromise;
 }
 const hoverTip = document.createElement("div");
 hoverTip.className = "hover-tip";
@@ -509,6 +539,8 @@ async function refreshB2B() {
 }
 async function init() {
   try {
+    const requestedView = new URLSearchParams(location.search).get("view");
+    if (["overview", "b2c", "b2b", "insights"].includes(requestedView)) state.view = requestedView;
     [state.b2c, state.b2b] = await Promise.all([
       getJson("data/b2c.json"),
       getJson("data/b2b-snapshot.json"),
@@ -534,11 +566,29 @@ async function init() {
       });
     }
     document.querySelectorAll(".tab").forEach((t) =>
-      t.addEventListener("click", () => {
-        state.view = t.dataset.view;
+      t.addEventListener("click", async () => {
+        const view = t.dataset.view;
+        state.view = view;
+        const url = new URL(location.href);
+        if (view === "overview") url.searchParams.delete("view");
+        else url.searchParams.set("view", view);
+        history.replaceState(null, "", url);
         render();
+        if (view === "insights" && !state.insightsMarkup) {
+          try {
+            await loadInsightsMarkup();
+            if (state.view === view) render();
+          } catch (error) {
+            if (state.view === view) $("content").innerHTML = '<div class="error" role="alert">Não foi possível carregar os insights. Tente abrir a aba novamente.</div>';
+            console.error(error);
+          }
+        }
       }),
     );
+    if (state.view === "insights") {
+      try { await loadInsightsMarkup(); }
+      catch (error) { console.error("Template de insights indisponível", error); }
+    }
     render();
     if (!state.b2bScheduled) await refreshB2B();
     setInterval(refreshB2B, 15 * 60 * 1000);
