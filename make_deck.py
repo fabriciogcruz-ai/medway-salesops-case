@@ -28,7 +28,7 @@ OUT.parent.mkdir(exist_ok=True)
 prs=Presentation();prs.slide_width=Inches(13.333);prs.slide_height=Inches(7.5)
 NAVY=RGBColor(0,32,91);BLUE=RGBColor(16,60,120);AQUA=RGBColor(1,207,181);WHITE=RGBColor(255,255,255)
 ICE=RGBColor(235,244,249);PALE=RGBColor(224,241,242);MUTED=RGBColor(79,99,118)
-GRID=RGBColor(220,230,237);GRAY=RGBColor(188,203,213)
+GRID=RGBColor(220,230,237)
 logo=BytesIO(cairosvg.svg2png(url=str(ROOT/'public/medway-logo.svg'),output_width=550))
 
 def fmt(n,dec=0):return f'{n:,.{dec}f}'.replace(',','X').replace('.',',').replace('X','.')
@@ -69,7 +69,7 @@ def chart(s,cats,series,x,y,w,h,maxval,kind=XL_CHART_TYPE.COLUMN_CLUSTERED):
     ch.value_axis.minimum_scale=0;ch.value_axis.maximum_scale=maxval
     ch.value_axis.has_major_gridlines=True;ch.value_axis.major_gridlines.format.line.color.rgb=GRID
     for i,ser in enumerate(ch.series):
-        ser.format.fill.solid();ser.format.fill.fore_color.rgb=(AQUA if i else GRAY) if len(series)>1 else BLUE
+        ser.format.fill.solid();ser.format.fill.fore_color.rgb=AQUA if i else BLUE
         ser.format.line.fill.background()
     return ch
 
