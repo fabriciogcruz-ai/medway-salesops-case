@@ -59,16 +59,16 @@ Abra `http://127.0.0.1:8777/` para testar a função local que consulta a API B2
 
 **Atualizar B2C em um build:** quando receber uma nova exportação, executar `python3 pipeline.py --b2c-only --csv /caminho/nova-exportacao.csv` e validar os agregados antes do deploy. Não sobrescrever o CSV original recebido. **A origem Google não atualiza sozinha:** nenhum acesso à planilha viva foi fornecido. Não apresentar o CSV fixo como sincronização automática do Google Sheets.
 
-### Demonstração ao vivo: CSV local → dashboard local
+### Demonstração ao vivo: Numbers → CSV privado → dashboard local
 
-O case forneceu apenas um CSV exportado, não a permissão para ler a Google Sheet original. Nesta máquina há uma **cópia privada** em `input/b2c-demo.csv`; o arquivo recebido em `~/medway-salesops/input/b2c-original.csv` não é editado. A pasta `input/` está ignorada pelo Git e excluída do pacote de entrega.
+O case forneceu apenas um CSV exportado, não a permissão para ler a Google Sheet original. O arquivo recebido em `~/medway-salesops/input/b2c-original.csv` não é editado; a pasta `input/` é privada/ignorada pelo Git.
 
 ```bash
 cd ~/medway-salesops-release
-python3 demo_local.py --port 8791
+zsh ./abrir_demo.command
 ```
 
-Abra `http://127.0.0.1:8791/` e **edite/salve `input/b2c-demo.csv`** no Excel/Numbers (não o CSV original). O observador espera o salvamento estabilizar, valida o arquivo inteiro, recompõe apenas os agregados públicos e o dashboard aberto consulta a nova versão automaticamente. O banner **“PRÉVIA LOCAL · CSV observado automaticamente”** mostra o último processamento. Se o CSV estiver incompleto/inválido, conserva o agregado anterior e sinaliza o erro. Para uma demonstração, use uma linha claramente marcada `DEMO_LOCAL_NAO_REAL` e remova-a depois; não apresente essa linha como venda real.
+O comando abre **`~/Documents/b2c-demo.numbers`** e o painel `http://127.0.0.1:8791/`. A ponte `numbers_bridge.py` verifica o caminho do documento aberto e se ele foi salvo; exporta temporariamente o formato CSV `;` do Numbers, normaliza para CSV `,`, valida as 4.435 linhas e os agregados e substitui atomicamente `input/b2c-demo.csv`. O watcher do `demo_local.py` entrega os novos agregados ao navegador aberto sem reload. Alteração não salva, outro documento aberto ou exportação inválida **não** altera o último agregado válido. Para testar, altere temporariamente J4120 de R$ 1.797,02 para R$ 101.797,02, salve, confira R$ 40,27 mi e **restaure/salve** para R$ 40,17 mi. Roteiro: `deliverables/Demo_Automatizacao_Medway.md`. O banner “CSV observado” se refere ao **intermediário privado**, não à Google Sheet original.
 
 O servidor local usa `input/b2b-token.txt` (arquivo privado, permissão `600`, também ignorado pelo Git) ou `MEDWAY_B2B_TOKEN` no ambiente para consultar `/api/b2b` **no servidor**; o navegador recebe somente agregados. Sem token, a tela rotula o snapshot B2B de contingência. O token não vai no JavaScript, URL pública, ZIP ou repositório. A API do case foi fornecida em HTTP — esta prévia demonstra o fluxo com o token, **não** resolve a segurança do transporte externo; para produção, a Medway deve oferecer HTTPS com certificado válido.
 
