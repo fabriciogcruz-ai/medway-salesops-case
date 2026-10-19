@@ -76,7 +76,7 @@ O servidor local usa `input/b2b-token.txt` (arquivo privado, permissão `600`, t
 
 ## Apresentação e vídeo
 
-- **Versão V2 para apresentação:** `deliverables/Medway_SalesOps_Fabricio_Cruz_V2.pptx` e `.pdf`, com **9 slides principais + 3 apêndices fora do vídeo**; 4 gráficos nativos editáveis. O ritmo visual intercala azul-marinho (tese/alerta/decisão), branco (evidências) e azul-gelo (método/segmentação), sempre na paleta Medway. O slide 6 inclui líderes de evento/embaixador/ICP e o alerta de atribuição.
+- **Versão V2 para apresentação:** `deliverables/Medway_SalesOps_Fabricio_Cruz_V2.pptx` e `.pdf`, com **10 slides principais + 3 apêndices fora do vídeo**; 4 gráficos nativos editáveis. O slide 7 incorpora os drivers da aba Insights: Orgânico + Indicação Direta respondem por 66,85% da alta por origem; R1 + R+ por 65,77% por produto — cortes sobrepostos, não somáveis. O fechamento propõe teste condicionado a custo, margem e incrementalidade. O ritmo visual intercala azul-marinho, branco e azul-gelo na paleta Medway.
 - `deliverables/Roteiro_Video_12min_V2.md`: narrativa de decisão, perguntas de defesa, uso de IA e demonstração local; alvo de **13–14 minutos** com a voz do candidato. **Nenhum vídeo foi gravado automaticamente.**
 - O gerador `make_deck.py` usa `python-pptx` e `cairosvg`; no macOS, Cairo pode precisar estar instalado via Homebrew. Os arquivos Montserrat e licença OFL estão em `assets/fonts/`. O gerador lê os JSONs auditados e falha se as métricas-chave divergirem. Exemplo: `python3 make_deck.py` após instalar essas dependências.
 - A cópia em PDF foi exportada do PPTX via Keynote; não é gerada por `make_deck.py`. **`deliverables/` não é publicado no repositório: anexar PPTX/PDF e vídeo separadamente na submissão.**
