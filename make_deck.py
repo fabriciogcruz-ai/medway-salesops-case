@@ -6,6 +6,8 @@ Visual rhythm: navy decision slides, white evidence slides, ice methodology slid
 from pathlib import Path
 from io import BytesIO
 import json
+import datetime as dt
+from zoneinfo import ZoneInfo
 import ctypes.util
 _cairo = Path('/opt/homebrew/opt/cairo/lib/libcairo.2.dylib')
 if _cairo.exists():
@@ -23,6 +25,7 @@ from pptx.enum.chart import XL_CHART_TYPE, XL_TICK_MARK
 ROOT=Path(__file__).resolve().parent
 B=json.loads((ROOT/'public/data/b2c.json').read_text())
 C=json.loads((ROOT/'public/data/b2b-snapshot.json').read_text())
+snapshot_at=dt.datetime.fromisoformat(C['fetched_at']).astimezone(ZoneInfo('America/Sao_Paulo')).strftime('%d/%m/%Y %H:%M')
 OUT=ROOT/'deliverables/Medway_SalesOps_Fabricio_Cruz_V2.pptx'
 OUT.parent.mkdir(exist_ok=True)
 prs=Presentation();prs.slide_width=Inches(13.333);prs.slide_height=Inches(7.5)
@@ -122,17 +125,18 @@ s=base(4,'B2C · anomalia','Antes de projetar setembro, explicar o dia 30.',sour
 metric(s,'51,88%','do valor de setembro em um dia',.78,2.24,6.0,AQUA)
 txt(s,'30/09 · '+money(day['cents']),.80,3.72,5.7,.35,15,WHITE,True)
 txt(s,'Demais dias · '+money(sep['cents']-day['cents']),6.70,3.72,5.75,.35,15,PALE,True,PP_ALIGN.RIGHT)
-rect(s,.80,4.16,11.50,.38,RGBColor(43,82,122))
+rect(s,.80,4.16,11.50,.38,RGBColor(121,151,179))
 rect(s,.80,4.16,11.50*day['cents']/sep['cents'],.38,AQUA)
+rect(s,.80+11.50*day['cents']/sep['cents']-.015,4.16,.03,.38,WHITE)
 txt(s,'327 linhas em 30/09/2025 · quatro origens no dia.',.80,4.90,11.5,.43,22,WHITE,True)
 txt(s,'Campanha, lote ou data de registro são hipóteses — auditar antes de projetar.',.80,5.60,11.5,.63,18,PALE)
 
 # MAIN 5 — concentration intersection, no double counting.
-s=base(5,'B2B · carteira ativa','Quatro contratos Enterprise × SP concentram 37,06%.',source='Fonte: API de contratos B2B · foto coletada em '+C['fetched_at']+'; status ativo apenas. Valor contratado, não recebido.')
+s=base(5,'B2B · carteira ativa','Quatro contratos Enterprise × SP concentram 37,06%.',source='Fonte: API de contratos B2B · foto coletada em '+snapshot_at+', horário de Brasília; status ativo apenas. Valor contratado, não recebido.')
 metric(s,'37,06%','da soma mensal ativa · Enterprise × SP',.78,2.28,7.0,NAVY)
 txt(s,'4 contratos · '+money(cell['active_monthly_cents'],0)+'/mês',.80,3.71,5.76,.33,15,NAVY,True)
 txt(s,'Demais ativos · '+money(active-cell['active_monthly_cents'],0)+'/mês',6.74,3.71,5.55,.33,15,MUTED,True,PP_ALIGN.RIGHT)
-rect(s,.80,4.13,11.50,.38,PALE)
+rect(s,.80,4.13,11.50,.38,BLUE)
 rect(s,.80,4.13,11.50*cell['active_monthly_cents']/active,.38,AQUA)
 rect(s,.78,4.82,11.75,.92,ICE)
 txt(s,'4 de 26 contratos ativos na interseção Enterprise × SP',1.08,5.02,10.9,.43,22,NAVY,True)
