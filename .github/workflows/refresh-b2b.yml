@@ -32,8 +32,9 @@ jobs:
           test -n "$MEDWAY_B2B_TOKEN"
           python3 pipeline.py --b2b-only
           python3 -m unittest discover -s tests -v
-          node --test tests/test_api.cjs tests/test_filter.cjs
+          node --test tests/test_api.cjs tests/test_filter.cjs tests/test_insights.cjs
           node --check public/app.js
+          node --check public/insights.js
       - name: Commit only verified public aggregate
         run: |
           git config user.name 'github-actions[bot]'

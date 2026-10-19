@@ -30,8 +30,9 @@ jobs:
       - name: Validate published aggregates and frontend
         run: |
           python3 -m unittest discover -s tests -v
-          node --test tests/test_api.cjs tests/test_filter.cjs
+          node --test tests/test_api.cjs tests/test_filter.cjs tests/test_insights.cjs
           node --check public/app.js
+          node --check public/insights.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

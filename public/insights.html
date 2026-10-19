@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00205B" />
+    <meta name="description" content="Insights acionáveis do case Medway SalesOps: motores de crescimento B2C, teste de mídia e exposição contratual B2B, com evidências e limites claros." />
+    <title>Insights e decisões | Medway SalesOps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css?v=20261018-insights-link-v1" />
+    <link rel="stylesheet" href="insights.css?v=20261018-insights-v1" />
+    <script src="insights.js?v=20261018-insights-v1" defer></script>
+  </head>
+  <body class="insights-page" id="top">
+    <a class="skip" href="#main">Ir para insights</a>
+    <header class="topbar">
+      <div class="brand"><img src="medway-logo.svg" alt="Medway" /><span class="brand-divider" aria-hidden="true"></span><span class="brand-name">SALES<span>OPS</span></span></div>
+      <nav class="insight-nav" aria-label="Navegação da análise"><a href="index.html">← Dashboard</a><span aria-current="page">Insights e decisões</span></nav>
+    </header>
+    <main id="main">
+      <section class="insight-hero" aria-labelledby="insight-title">
+        <div class="insight-hero-copy">
+          <span class="insight-eyebrow">MEDWAY / SALESOPS / BRIEF DE DECISÃO</span>
+          <h1 id="insight-title">Onde investir?<br /><em>Primeiro, provar retorno.</em></h1>
+          <p>O histórico mostra onde o valor pago cresceu. Não mostra CAC, margem nem incrementalidade. Por isso a recomendação de Ads é <strong>um teste com condição de avanço</strong>, não uma redistribuição de verba já aprovada.</p>
+        </div>
+        <div class="insight-hero-number" aria-label="Variação de valor B2C na janela comparável"><span>JAN–JUL 2026 × 2025</span><strong id="hero-delta">Carregando…</strong><small>de valor pago B2C na janela comparável</small></div>
+      </section>
+      <div class="insight-scope"><span><b>B2C</b> · CSV fechado em 31/07/2026 · comparações jan–jul/2025 vs. jan–jul/2026</span><span><b>B2B</b> · snapshot de contratos ativos em <time id="b2b-stamp">carregamento</time></span></div>
+      <div class="insight-error" id="insight-error" role="alert" hidden>Não foi possível carregar os agregados publicados. Volte ao <a href="index.html">dashboard</a> e tente novamente.</div>
+      <section class="insight-section" aria-labelledby="evidence-title">
+        <div class="insight-section-head"><span class="insight-index">01 / LEITURA DO CRESCIMENTO</span><h2 id="evidence-title">O avanço de valor pago não veio igualmente de todas as origens.</h2><p>Contribuição para o aumento do <em>valor pago</em>, não participação no orçamento de mídia.</p></div>
+        <div class="driver-grid">
+          <article class="driver-panel"><div class="driver-panel-head"><span>ORIGEM DECLARADA NO CSV</span><strong id="origin-pair-share">—</strong></div><h3>Orgânico + Indicação puxam o avanço.</h3><p>Parcela da diferença de valor pago entre as duas janelas. Origem atribuída não demonstra causa, custo nem retorno.</p><div class="driver-bars" id="origin-bars" aria-label="Contribuição por origem"></div></article>
+          <article class="driver-panel"><div class="driver-panel-head"><span>PRODUTO VENDIDO</span><strong id="product-pair-share">—</strong></div><h3>R1 + R+ concentram o avanço por produto.</h3><p>É um sinal para testar demanda qualificada por esses extensivos; não uma prova de que Ads terá margem positiva.</p><div class="driver-bars" id="product-bars" aria-label="Contribuição por produto"></div></article>
+        </div>
+        <p class="insight-method">Método: para cada categoria, soma de <code>valor_pago</code> em jan–jul/2026 menos jan–jul/2025, dividida pela diferença total do B2C. Categorias são mutuamente exclusivas <em>dentro</em> de cada dimensão. Origens e produtos são duas leituras do mesmo valor; não somar entre painéis.</p>
+      </section>
+      <section class="insight-section insight-section-action" aria-labelledby="action-title">
+        <div class="insight-section-head"><span class="insight-index">02 / DECISÕES PROPOSTAS</span><h2 id="action-title">Quatro movimentos. Só um envolve testar Ads.</h2><p>O investimento é condicionado a dados que ainda não constam no case.</p></div>
+        <div class="decision-list">
+          <article class="decision decision-primary"><div class="decision-serial">01</div><div class="decision-body"><span class="decision-type">PILOTO DE MÍDIA · HIPÓTESE, NÃO ROI MEDIDO</span><h3>Testar intenção por Extensivo R1 e R+.</h3><p><strong id="paid-signal">—</strong> do avanço de valor pago veio desses dois produtos. Um piloto de busca de alta intenção com páginas específicas por produto é uma hipótese testável; a base não identifica Google, Meta ou qualquer campanha como vencedora.</p><div class="decision-checks"><div><b>Instrumentar antes</b><span>UTM, gasto, lead, pedido, desconto, reembolso e margem por produto/campanha; definir grupo de comparação.</span></div><div><b>Avançar somente se</b><span>o ganho <em>incremental</em> de margem de contribuição superar mídia + custos variáveis, sem piorar qualidade do pedido.</span></div></div></div><div class="decision-state">TESTAR<br />NÃO ESCALAR</div></article>
+          <article class="decision"><div class="decision-serial">02</div><div class="decision-body"><span class="decision-type">DEFENDER AQUISIÇÃO EXISTENTE</span><h3>Medir e fortalecer Orgânico + Indicação.</h3><p><strong id="earned-signal">—</strong> do aumento de valor foi atribuído a essas origens. Revisar captura de demanda orgânica e processo de indicação antes de trocar verba para mídia; o CSV não prova que esses canais tenham custo zero.</p><div class="decision-checks"><div><b>Próximo teste</b><span>Traçar primeiro toque, atribuição e conversão até pedido, separando indicação real de origem preenchida por conveniência.</span></div></div></div><div class="decision-state">MEDIR<br />E PROTEGER</div></article>
+          <article class="decision"><div class="decision-serial">03</div><div class="decision-body"><span class="decision-type">PRODUTO DE ENTRADA</span><h3>Não confundir volume de Curso Avulso com motor de valor.</h3><p>Foram <strong id="course-volume">—</strong> registros em jan–jul/2026, mas só <strong id="course-growth-share">—</strong> da alta de valor veio desse produto. Pode ser porta de entrada para extensivos; a base não tem ID de cliente para provar essa jornada.</p><div class="decision-checks"><div><b>Antes de investir</b><span>Medir upgrade para extensivos, tempo até segunda compra, margem e CAC por coorte; só então tratar o curso como aquisição.</span></div></div></div><div class="decision-state">VALIDAR<br />UPSELL</div></article>
+          <article class="decision"><div class="decision-serial">04</div><div class="decision-body"><span class="decision-type">PROTEÇÃO DE CARTEIRA B2B</span><h3>Concentrar acompanhamento onde a exposição é maior.</h3><p><strong id="b2b-cell-share">—</strong> do valor mensal contratado ativo está na interseção Enterprise × SP, em <strong id="b2b-cell-count">—</strong> contratos. Exposição não é probabilidade de churn; contratos não equivalem a instituições únicas.</p><div class="decision-checks"><div><b>Próximo controle</b><span>Responsável por conta, vigência, adoção de licenças, status histórico, vínculo turma/renovação e plano de acompanhamento.</span></div></div></div><div class="decision-state">PROTEGER<br />AGORA</div></article>
+        </div>
+      </section>
+      <section class="insight-bottom" aria-labelledby="limit-title"><div><span class="insight-index">03 / LIMITE DA RECOMENDAÇÃO</span><h2 id="limit-title">Não existe “melhor canal de Ads” demonstrado aqui.</h2></div><p>O CSV informa origem atribuída e valor pago, mas não traz investimento, impressões, leads, CAC, margem, conversão, ID de cliente ou localização do comprador. Região de evento não é geografia de compra. Nenhum valor de ROI, orçamento ótimo ou cidade-alvo foi inventado. O B2B é uma foto contratual, não caixa recebido nem MRR histórico.</p></section>
+      <a class="insight-return" href="index.html">Voltar ao dashboard e explorar os recortes <span aria-hidden="true">↗</span></a>
+    </main>
+    <footer><span>MEDWAY / SALESOPS</span><span>Case técnico · Fabrício Cruz · Não é painel oficial da Medway</span><a href="#top">Voltar ao topo ↑</a></footer>
+  </body>
+</html>

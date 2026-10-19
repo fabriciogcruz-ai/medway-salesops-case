@@ -35,6 +35,7 @@ API B2B /contratos ── api/b2b.js (token no servidor) ───────�
 - `.github/workflows/refresh-b2b.yml` agenda uma atualização **a cada hora** do **snapshot agregado B2B** como fonte da publicação GitHub Pages; depende do secret `MEDWAY_B2B_TOKEN` e de Actions habilitadas. A configuração está ativa: execução manual e primeira execução natural `schedule` validadas em 18/10/2026 (coleta em 19/10/2026 00:13 UTC, 28 contratos/26 ativos), com readback do JSON público. GitHub Actions pode atrasar ou descartar ticks; o carimbo e o aviso de defasagem são parte do controle, não um SLA garantido.
 - `.github/workflows/publish-pages.yml` executa testes Python/Node e valida JavaScript **antes** de publicar `public/` no GitHub Pages; o workflow B2B aplica os mesmos testes após atualizar o snapshot e antes de commit/deploy. Os testes que exigem o CSV bruto são pulados no runner público (o CSV não está no repositório); localmente rodam com o arquivo recebido.
 - O dashboard tem filtros de período B2C, três visões e legenda de fonte/atualização. KPIs, série, rankings, matriz, alertas de qualidade e destaque do pico respeitam o filtro. O comparativo anual usa **somente meses de 2026 selecionados**, contra os mesmos meses de 2025 como referência explicitamente rotulada; quando não há meses de 2026, não exibe comparação. A fotografia B2B não é filtrada pelo período B2C. Na falha da API agendada, mantém o último snapshot **com carimbo de data que expõe defasagem**.
+- A página [`public/insights.html`](public/insights.html) é um **brief de decisão** separado do filtro do dashboard: compara jan–jul/2025 com jan–jul/2026, deriva contribuições por origem e produto dos agregados públicos e lê a foto B2B atual. Propõe teste controlado de Ads para Extensivo R1/R+, preservação de Orgânico/Indicação, validação de upsell do Curso Avulso e acompanhamento Enterprise × SP. **Não declara Google/Meta vencedores, ROI, CAC, margem nem verba ótima:** faltam custos, funil, IDs de cliente/pedido e incrementalidade. Os números B2B atualizam com o mesmo snapshot agendado.
 - A API fornecida usa HTTP. HTTPS foi testado, mas a cadeia do certificado falhou na validação. O token permanece server-side; para produção, exigir TLS válido e rotação de credencial. Não desabilitar validação TLS.
 
 ## Rodar localmente
@@ -71,7 +72,9 @@ Abra `http://127.0.0.1:8777/` para testar a função local que consulta a API B2
 python3 -m unittest discover -s tests -v
 node --test tests/test_api.cjs
 node --test tests/test_filter.cjs
+node --test tests/test_insights.cjs
 node --check public/app.js
+node --check public/insights.js
 ```
 
 ## Publicação
