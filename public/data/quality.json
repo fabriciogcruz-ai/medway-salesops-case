@@ -1,0 +1,44 @@
+{
+  "rows": 4435,
+  "csv_sha256": "b7be2461df8d76db66cd9bbd95e702bf0deaeb3e456b108d1e07fae7ea16e5c2",
+  "money_formats": {
+    "BR": 4319,
+    "PONTO": 116
+  },
+  "date_formats": {
+    "BR": 746,
+    "ISO": 3689
+  },
+  "identical_extra_rows_retained": 3,
+  "monthly": [
+    {
+      "month": "2025-11",
+      "negative": 0,
+      "zero": 0,
+      "identical_extra_rows_retained": 2
+    },
+    {
+      "month": "2026-02",
+      "negative": 1,
+      "zero": 0,
+      "identical_extra_rows_retained": 0
+    },
+    {
+      "month": "2026-04",
+      "negative": 0,
+      "zero": 1,
+      "identical_extra_rows_retained": 1
+    }
+  ],
+  "note": "Linhas idênticas preservadas: ausência de ID transacional impede deduplicação segura.",
+  "exceptions": [
+    {
+      "type": "negative",
+      "count": 1
+    },
+    {
+      "type": "zero",
+      "count": 1
+    }
+  ]
+}

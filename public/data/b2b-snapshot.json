@@ -1,0 +1,280 @@
+{
+  "source": "API de contratos B2B (snapshot de status no momento da coleta)",
+  "fetched_at": "2026-10-18T21:36:59+00:00",
+  "total_contracts": 28,
+  "active_contracts": 26,
+  "active_monthly_cents": 18094400,
+  "active_licenses": 1846,
+  "status": [
+    {
+      "name": "ativo",
+      "count": 26,
+      "active_monthly_cents": 18094400,
+      "active_licenses": 1846
+    },
+    {
+      "name": "churn",
+      "count": 1,
+      "active_monthly_cents": 0,
+      "active_licenses": 0
+    },
+    {
+      "name": "pausado",
+      "count": 1,
+      "active_monthly_cents": 0,
+      "active_licenses": 0
+    }
+  ],
+  "plans": [
+    {
+      "name": "Institucional Basic",
+      "count": 10,
+      "active_monthly_cents": 1251900,
+      "active_licenses": 321
+    },
+    {
+      "name": "Institucional Enterprise",
+      "count": 6,
+      "active_monthly_cents": 10206500,
+      "active_licenses": 685
+    },
+    {
+      "name": "Institucional Pro",
+      "count": 12,
+      "active_monthly_cents": 6636000,
+      "active_licenses": 840
+    }
+  ],
+  "regions": [
+    {
+      "name": "CO",
+      "count": 4,
+      "active_monthly_cents": 2172500,
+      "active_licenses": 275
+    },
+    {
+      "name": "MG",
+      "count": 2,
+      "active_monthly_cents": 343200,
+      "active_licenses": 88
+    },
+    {
+      "name": "N",
+      "count": 4,
+      "active_monthly_cents": 732600,
+      "active_licenses": 114
+    },
+    {
+      "name": "NE",
+      "count": 4,
+      "active_monthly_cents": 1639900,
+      "active_licenses": 241
+    },
+    {
+      "name": "RJ",
+      "count": 2,
+      "active_monthly_cents": 265200,
+      "active_licenses": 68
+    },
+    {
+      "name": "SP",
+      "count": 8,
+      "active_monthly_cents": 9217200,
+      "active_licenses": 768
+    },
+    {
+      "name": "SUL",
+      "count": 4,
+      "active_monthly_cents": 3723800,
+      "active_licenses": 292
+    }
+  ],
+  "products": [
+    {
+      "name": "Extensivo R+",
+      "count": 6,
+      "active_monthly_cents": 865800,
+      "active_licenses": 222
+    },
+    {
+      "name": "Extensivo R1",
+      "count": 14,
+      "active_monthly_cents": 9195000,
+      "active_licenses": 1020
+    },
+    {
+      "name": "Trilha Institucional",
+      "count": 8,
+      "active_monthly_cents": 8033600,
+      "active_licenses": 604
+    }
+  ],
+  "plan_region": [
+    {
+      "plan": "Institucional Basic",
+      "region": "MG",
+      "count": 2,
+      "active_monthly_cents": 343200,
+      "active_licenses": 88
+    },
+    {
+      "plan": "Institucional Basic",
+      "region": "N",
+      "count": 2,
+      "active_monthly_cents": 163800,
+      "active_licenses": 42
+    },
+    {
+      "plan": "Institucional Basic",
+      "region": "NE",
+      "count": 2,
+      "active_monthly_cents": 257400,
+      "active_licenses": 66
+    },
+    {
+      "plan": "Institucional Basic",
+      "region": "RJ",
+      "count": 2,
+      "active_monthly_cents": 265200,
+      "active_licenses": 68
+    },
+    {
+      "plan": "Institucional Basic",
+      "region": "SUL",
+      "count": 2,
+      "active_monthly_cents": 222300,
+      "active_licenses": 57
+    },
+    {
+      "plan": "Institucional Enterprise",
+      "region": "SP",
+      "count": 4,
+      "active_monthly_cents": 6705000,
+      "active_licenses": 450
+    },
+    {
+      "plan": "Institucional Enterprise",
+      "region": "SUL",
+      "count": 2,
+      "active_monthly_cents": 3501500,
+      "active_licenses": 235
+    },
+    {
+      "plan": "Institucional Pro",
+      "region": "CO",
+      "count": 4,
+      "active_monthly_cents": 2172500,
+      "active_licenses": 275
+    },
+    {
+      "plan": "Institucional Pro",
+      "region": "N",
+      "count": 2,
+      "active_monthly_cents": 568800,
+      "active_licenses": 72
+    },
+    {
+      "plan": "Institucional Pro",
+      "region": "NE",
+      "count": 2,
+      "active_monthly_cents": 1382500,
+      "active_licenses": 175
+    },
+    {
+      "plan": "Institucional Pro",
+      "region": "SP",
+      "count": 4,
+      "active_monthly_cents": 2512200,
+      "active_licenses": 318
+    }
+  ],
+  "start_year_status": [
+    {
+      "year": "2025",
+      "status": "ativo",
+      "count": 12,
+      "active_monthly_cents": 8020500,
+      "active_licenses": 795
+    },
+    {
+      "year": "2025",
+      "status": "churn",
+      "count": 1,
+      "active_monthly_cents": 0,
+      "active_licenses": 0
+    },
+    {
+      "year": "2025",
+      "status": "pausado",
+      "count": 1,
+      "active_monthly_cents": 0,
+      "active_licenses": 0
+    },
+    {
+      "year": "2026",
+      "status": "ativo",
+      "count": 14,
+      "active_monthly_cents": 10073900,
+      "active_licenses": 1051
+    }
+  ],
+  "starts": [
+    {
+      "month": "2025-01",
+      "count": 2
+    },
+    {
+      "month": "2025-02",
+      "count": 2
+    },
+    {
+      "month": "2025-03",
+      "count": 2
+    },
+    {
+      "month": "2025-04",
+      "count": 2
+    },
+    {
+      "month": "2025-05",
+      "count": 2
+    },
+    {
+      "month": "2025-06",
+      "count": 2
+    },
+    {
+      "month": "2025-07",
+      "count": 2
+    },
+    {
+      "month": "2026-01",
+      "count": 2
+    },
+    {
+      "month": "2026-02",
+      "count": 2
+    },
+    {
+      "month": "2026-03",
+      "count": 2
+    },
+    {
+      "month": "2026-04",
+      "count": 2
+    },
+    {
+      "month": "2026-05",
+      "count": 2
+    },
+    {
+      "month": "2026-06",
+      "count": 2
+    },
+    {
+      "month": "2026-07",
+      "count": 2
+    }
+  ],
+  "limits": "Sem data_fim, histórico de status, cobrança ou recebimento. Inícios são coortes de assinatura, não MRR histórico."
+}

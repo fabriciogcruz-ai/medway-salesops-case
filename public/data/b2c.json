@@ -1,0 +1,1418 @@
+{
+  "source": "CSV entregue para o case; snapshot não conectado à planilha de origem",
+  "period": {
+    "first": "2025-01-01",
+    "last": "2026-07-31"
+  },
+  "total": {
+    "count": 4435,
+    "cents": 4016521974
+  },
+  "monthly": [
+    {
+      "name": "2025-01",
+      "count": 90,
+      "cents": 78029911
+    },
+    {
+      "name": "2025-02",
+      "count": 95,
+      "cents": 79045078
+    },
+    {
+      "name": "2025-03",
+      "count": 105,
+      "cents": 94581635
+    },
+    {
+      "name": "2025-04",
+      "count": 100,
+      "cents": 99266628
+    },
+    {
+      "name": "2025-05",
+      "count": 110,
+      "cents": 97053848
+    },
+    {
+      "name": "2025-06",
+      "count": 115,
+      "cents": 104478436
+    },
+    {
+      "name": "2025-07",
+      "count": 130,
+      "cents": 115484149
+    },
+    {
+      "name": "2025-08",
+      "count": 180,
+      "cents": 157956639
+    },
+    {
+      "name": "2025-09",
+      "count": 650,
+      "cents": 602863925
+    },
+    {
+      "name": "2025-10",
+      "count": 500,
+      "cents": 448196257
+    },
+    {
+      "name": "2025-11",
+      "count": 350,
+      "cents": 316648136
+    },
+    {
+      "name": "2025-12",
+      "count": 250,
+      "cents": 220063837
+    },
+    {
+      "name": "2026-01",
+      "count": 220,
+      "cents": 194868072
+    },
+    {
+      "name": "2026-02",
+      "count": 210,
+      "cents": 185970495
+    },
+    {
+      "name": "2026-03",
+      "count": 240,
+      "cents": 214228813
+    },
+    {
+      "name": "2026-04",
+      "count": 230,
+      "cents": 208128478
+    },
+    {
+      "name": "2026-05",
+      "count": 260,
+      "cents": 247632491
+    },
+    {
+      "name": "2026-06",
+      "count": 280,
+      "cents": 257294487
+    },
+    {
+      "name": "2026-07",
+      "count": 320,
+      "cents": 294730659
+    }
+  ],
+  "by_origin": [
+    {
+      "name": "Embaixador",
+      "count": 786,
+      "cents": 663434397
+    },
+    {
+      "name": "Evento Presencial",
+      "count": 983,
+      "cents": 876802819
+    },
+    {
+      "name": "Indicação Direta",
+      "count": 924,
+      "cents": 857896113
+    },
+    {
+      "name": "Orgânico",
+      "count": 1742,
+      "cents": 1618388645
+    }
+  ],
+  "by_product": [
+    {
+      "name": "Curso Avulso",
+      "count": 767,
+      "cents": 93565054
+    },
+    {
+      "name": "Extensivo Programado 1",
+      "count": 490,
+      "cents": 588298203
+    },
+    {
+      "name": "Extensivo Programado 2",
+      "count": 668,
+      "cents": 717306243
+    },
+    {
+      "name": "Extensivo R+",
+      "count": 1215,
+      "cents": 1164878947
+    },
+    {
+      "name": "Extensivo R1",
+      "count": 1295,
+      "cents": 1452473527
+    }
+  ],
+  "monthly_origin": [
+    {
+      "month": "2025-01",
+      "name": "Embaixador",
+      "count": 22,
+      "cents": 18218975
+    },
+    {
+      "month": "2025-01",
+      "name": "Evento Presencial",
+      "count": 14,
+      "cents": 13160344
+    },
+    {
+      "month": "2025-01",
+      "name": "Indicação Direta",
+      "count": 15,
+      "cents": 11706453
+    },
+    {
+      "month": "2025-01",
+      "name": "Orgânico",
+      "count": 39,
+      "cents": 34944139
+    },
+    {
+      "month": "2025-02",
+      "name": "Embaixador",
+      "count": 20,
+      "cents": 13004810
+    },
+    {
+      "month": "2025-02",
+      "name": "Evento Presencial",
+      "count": 25,
+      "cents": 20424370
+    },
+    {
+      "month": "2025-02",
+      "name": "Indicação Direta",
+      "count": 23,
+      "cents": 19318571
+    },
+    {
+      "month": "2025-02",
+      "name": "Orgânico",
+      "count": 27,
+      "cents": 26297327
+    },
+    {
+      "month": "2025-03",
+      "name": "Embaixador",
+      "count": 22,
+      "cents": 18649909
+    },
+    {
+      "month": "2025-03",
+      "name": "Evento Presencial",
+      "count": 25,
+      "cents": 22873282
+    },
+    {
+      "month": "2025-03",
+      "name": "Indicação Direta",
+      "count": 22,
+      "cents": 17919550
+    },
+    {
+      "month": "2025-03",
+      "name": "Orgânico",
+      "count": 36,
+      "cents": 35138894
+    },
+    {
+      "month": "2025-04",
+      "name": "Embaixador",
+      "count": 14,
+      "cents": 11930075
+    },
+    {
+      "month": "2025-04",
+      "name": "Evento Presencial",
+      "count": 24,
+      "cents": 23106948
+    },
+    {
+      "month": "2025-04",
+      "name": "Indicação Direta",
+      "count": 18,
+      "cents": 17681850
+    },
+    {
+      "month": "2025-04",
+      "name": "Orgânico",
+      "count": 44,
+      "cents": 46547755
+    },
+    {
+      "month": "2025-05",
+      "name": "Embaixador",
+      "count": 17,
+      "cents": 13506893
+    },
+    {
+      "month": "2025-05",
+      "name": "Evento Presencial",
+      "count": 23,
+      "cents": 20138616
+    },
+    {
+      "month": "2025-05",
+      "name": "Indicação Direta",
+      "count": 22,
+      "cents": 19833885
+    },
+    {
+      "month": "2025-05",
+      "name": "Orgânico",
+      "count": 48,
+      "cents": 43574454
+    },
+    {
+      "month": "2025-06",
+      "name": "Embaixador",
+      "count": 17,
+      "cents": 14973705
+    },
+    {
+      "month": "2025-06",
+      "name": "Evento Presencial",
+      "count": 33,
+      "cents": 30083057
+    },
+    {
+      "month": "2025-06",
+      "name": "Indicação Direta",
+      "count": 21,
+      "cents": 18519921
+    },
+    {
+      "month": "2025-06",
+      "name": "Orgânico",
+      "count": 44,
+      "cents": 40901753
+    },
+    {
+      "month": "2025-07",
+      "name": "Embaixador",
+      "count": 18,
+      "cents": 15105439
+    },
+    {
+      "month": "2025-07",
+      "name": "Evento Presencial",
+      "count": 26,
+      "cents": 24389218
+    },
+    {
+      "month": "2025-07",
+      "name": "Indicação Direta",
+      "count": 28,
+      "cents": 24870990
+    },
+    {
+      "month": "2025-07",
+      "name": "Orgânico",
+      "count": 58,
+      "cents": 51118502
+    },
+    {
+      "month": "2025-08",
+      "name": "Embaixador",
+      "count": 31,
+      "cents": 25964138
+    },
+    {
+      "month": "2025-08",
+      "name": "Evento Presencial",
+      "count": 39,
+      "cents": 35169583
+    },
+    {
+      "month": "2025-08",
+      "name": "Indicação Direta",
+      "count": 44,
+      "cents": 36879085
+    },
+    {
+      "month": "2025-08",
+      "name": "Orgânico",
+      "count": 66,
+      "cents": 59943833
+    },
+    {
+      "month": "2025-09",
+      "name": "Embaixador",
+      "count": 116,
+      "cents": 103644966
+    },
+    {
+      "month": "2025-09",
+      "name": "Evento Presencial",
+      "count": 156,
+      "cents": 140966156
+    },
+    {
+      "month": "2025-09",
+      "name": "Indicação Direta",
+      "count": 142,
+      "cents": 142047686
+    },
+    {
+      "month": "2025-09",
+      "name": "Orgânico",
+      "count": 236,
+      "cents": 216205117
+    },
+    {
+      "month": "2025-10",
+      "name": "Embaixador",
+      "count": 87,
+      "cents": 70781292
+    },
+    {
+      "month": "2025-10",
+      "name": "Evento Presencial",
+      "count": 113,
+      "cents": 96064557
+    },
+    {
+      "month": "2025-10",
+      "name": "Indicação Direta",
+      "count": 104,
+      "cents": 93597980
+    },
+    {
+      "month": "2025-10",
+      "name": "Orgânico",
+      "count": 196,
+      "cents": 187752428
+    },
+    {
+      "month": "2025-11",
+      "name": "Embaixador",
+      "count": 82,
+      "cents": 74484255
+    },
+    {
+      "month": "2025-11",
+      "name": "Evento Presencial",
+      "count": 88,
+      "cents": 78073052
+    },
+    {
+      "month": "2025-11",
+      "name": "Indicação Direta",
+      "count": 70,
+      "cents": 61946972
+    },
+    {
+      "month": "2025-11",
+      "name": "Orgânico",
+      "count": 110,
+      "cents": 102143857
+    },
+    {
+      "month": "2025-12",
+      "name": "Embaixador",
+      "count": 44,
+      "cents": 36768040
+    },
+    {
+      "month": "2025-12",
+      "name": "Evento Presencial",
+      "count": 60,
+      "cents": 49220573
+    },
+    {
+      "month": "2025-12",
+      "name": "Indicação Direta",
+      "count": 43,
+      "cents": 38855795
+    },
+    {
+      "month": "2025-12",
+      "name": "Orgânico",
+      "count": 103,
+      "cents": 95219429
+    },
+    {
+      "month": "2026-01",
+      "name": "Embaixador",
+      "count": 33,
+      "cents": 29726739
+    },
+    {
+      "month": "2026-01",
+      "name": "Evento Presencial",
+      "count": 42,
+      "cents": 36064202
+    },
+    {
+      "month": "2026-01",
+      "name": "Indicação Direta",
+      "count": 44,
+      "cents": 36214919
+    },
+    {
+      "month": "2026-01",
+      "name": "Orgânico",
+      "count": 101,
+      "cents": 92862212
+    },
+    {
+      "month": "2026-02",
+      "name": "Embaixador",
+      "count": 36,
+      "cents": 29343047
+    },
+    {
+      "month": "2026-02",
+      "name": "Evento Presencial",
+      "count": 41,
+      "cents": 34630960
+    },
+    {
+      "month": "2026-02",
+      "name": "Indicação Direta",
+      "count": 43,
+      "cents": 42291607
+    },
+    {
+      "month": "2026-02",
+      "name": "Orgânico",
+      "count": 90,
+      "cents": 79704881
+    },
+    {
+      "month": "2026-03",
+      "name": "Embaixador",
+      "count": 24,
+      "cents": 11705346
+    },
+    {
+      "month": "2026-03",
+      "name": "Evento Presencial",
+      "count": 42,
+      "cents": 38199448
+    },
+    {
+      "month": "2026-03",
+      "name": "Indicação Direta",
+      "count": 67,
+      "cents": 66246857
+    },
+    {
+      "month": "2026-03",
+      "name": "Orgânico",
+      "count": 107,
+      "cents": 98077162
+    },
+    {
+      "month": "2026-04",
+      "name": "Embaixador",
+      "count": 37,
+      "cents": 35162738
+    },
+    {
+      "month": "2026-04",
+      "name": "Evento Presencial",
+      "count": 45,
+      "cents": 39459252
+    },
+    {
+      "month": "2026-04",
+      "name": "Indicação Direta",
+      "count": 47,
+      "cents": 44765535
+    },
+    {
+      "month": "2026-04",
+      "name": "Orgânico",
+      "count": 101,
+      "cents": 88740953
+    },
+    {
+      "month": "2026-05",
+      "name": "Embaixador",
+      "count": 46,
+      "cents": 42450978
+    },
+    {
+      "month": "2026-05",
+      "name": "Evento Presencial",
+      "count": 57,
+      "cents": 56875304
+    },
+    {
+      "month": "2026-05",
+      "name": "Indicação Direta",
+      "count": 60,
+      "cents": 55105856
+    },
+    {
+      "month": "2026-05",
+      "name": "Orgânico",
+      "count": 97,
+      "cents": 93200353
+    },
+    {
+      "month": "2026-06",
+      "name": "Embaixador",
+      "count": 58,
+      "cents": 44673203
+    },
+    {
+      "month": "2026-06",
+      "name": "Evento Presencial",
+      "count": 61,
+      "cents": 56217303
+    },
+    {
+      "month": "2026-06",
+      "name": "Indicação Direta",
+      "count": 48,
+      "cents": 50946077
+    },
+    {
+      "month": "2026-06",
+      "name": "Orgânico",
+      "count": 113,
+      "cents": 105457904
+    },
+    {
+      "month": "2026-07",
+      "name": "Embaixador",
+      "count": 62,
+      "cents": 53339849
+    },
+    {
+      "month": "2026-07",
+      "name": "Evento Presencial",
+      "count": 69,
+      "cents": 61686594
+    },
+    {
+      "month": "2026-07",
+      "name": "Indicação Direta",
+      "count": 63,
+      "cents": 59146524
+    },
+    {
+      "month": "2026-07",
+      "name": "Orgânico",
+      "count": 126,
+      "cents": 120557692
+    }
+  ],
+  "monthly_product": [
+    {
+      "month": "2025-01",
+      "name": "Curso Avulso",
+      "count": 15,
+      "cents": 1813004
+    },
+    {
+      "month": "2025-01",
+      "name": "Extensivo Programado 1",
+      "count": 7,
+      "cents": 8473083
+    },
+    {
+      "month": "2025-01",
+      "name": "Extensivo Programado 2",
+      "count": 13,
+      "cents": 14449749
+    },
+    {
+      "month": "2025-01",
+      "name": "Extensivo R+",
+      "count": 25,
+      "cents": 20704418
+    },
+    {
+      "month": "2025-01",
+      "name": "Extensivo R1",
+      "count": 30,
+      "cents": 32589657
+    },
+    {
+      "month": "2025-02",
+      "name": "Curso Avulso",
+      "count": 21,
+      "cents": 2767607
+    },
+    {
+      "month": "2025-02",
+      "name": "Extensivo Programado 1",
+      "count": 12,
+      "cents": 14986425
+    },
+    {
+      "month": "2025-02",
+      "name": "Extensivo Programado 2",
+      "count": 11,
+      "cents": 12236061
+    },
+    {
+      "month": "2025-02",
+      "name": "Extensivo R+",
+      "count": 24,
+      "cents": 21083118
+    },
+    {
+      "month": "2025-02",
+      "name": "Extensivo R1",
+      "count": 27,
+      "cents": 27971867
+    },
+    {
+      "month": "2025-03",
+      "name": "Curso Avulso",
+      "count": 15,
+      "cents": 1930844
+    },
+    {
+      "month": "2025-03",
+      "name": "Extensivo Programado 1",
+      "count": 15,
+      "cents": 18181471
+    },
+    {
+      "month": "2025-03",
+      "name": "Extensivo Programado 2",
+      "count": 17,
+      "cents": 18822588
+    },
+    {
+      "month": "2025-03",
+      "name": "Extensivo R+",
+      "count": 29,
+      "cents": 24085256
+    },
+    {
+      "month": "2025-03",
+      "name": "Extensivo R1",
+      "count": 29,
+      "cents": 31561476
+    },
+    {
+      "month": "2025-04",
+      "name": "Curso Avulso",
+      "count": 10,
+      "cents": 1297927
+    },
+    {
+      "month": "2025-04",
+      "name": "Extensivo Programado 1",
+      "count": 11,
+      "cents": 13438728
+    },
+    {
+      "month": "2025-04",
+      "name": "Extensivo Programado 2",
+      "count": 21,
+      "cents": 27745297
+    },
+    {
+      "month": "2025-04",
+      "name": "Extensivo R+",
+      "count": 24,
+      "cents": 20755136
+    },
+    {
+      "month": "2025-04",
+      "name": "Extensivo R1",
+      "count": 34,
+      "cents": 36029540
+    },
+    {
+      "month": "2025-05",
+      "name": "Curso Avulso",
+      "count": 22,
+      "cents": 2573980
+    },
+    {
+      "month": "2025-05",
+      "name": "Extensivo Programado 1",
+      "count": 17,
+      "cents": 20755687
+    },
+    {
+      "month": "2025-05",
+      "name": "Extensivo Programado 2",
+      "count": 20,
+      "cents": 23545413
+    },
+    {
+      "month": "2025-05",
+      "name": "Extensivo R+",
+      "count": 26,
+      "cents": 23331226
+    },
+    {
+      "month": "2025-05",
+      "name": "Extensivo R1",
+      "count": 25,
+      "cents": 26847542
+    },
+    {
+      "month": "2025-06",
+      "name": "Curso Avulso",
+      "count": 12,
+      "cents": 1102898
+    },
+    {
+      "month": "2025-06",
+      "name": "Extensivo Programado 1",
+      "count": 12,
+      "cents": 13528729
+    },
+    {
+      "month": "2025-06",
+      "name": "Extensivo Programado 2",
+      "count": 18,
+      "cents": 18776007
+    },
+    {
+      "month": "2025-06",
+      "name": "Extensivo R+",
+      "count": 40,
+      "cents": 34468037
+    },
+    {
+      "month": "2025-06",
+      "name": "Extensivo R1",
+      "count": 33,
+      "cents": 36602765
+    },
+    {
+      "month": "2025-07",
+      "name": "Curso Avulso",
+      "count": 24,
+      "cents": 2753229
+    },
+    {
+      "month": "2025-07",
+      "name": "Extensivo Programado 1",
+      "count": 8,
+      "cents": 9102500
+    },
+    {
+      "month": "2025-07",
+      "name": "Extensivo Programado 2",
+      "count": 21,
+      "cents": 26000412
+    },
+    {
+      "month": "2025-07",
+      "name": "Extensivo R+",
+      "count": 45,
+      "cents": 43498436
+    },
+    {
+      "month": "2025-07",
+      "name": "Extensivo R1",
+      "count": 32,
+      "cents": 34129572
+    },
+    {
+      "month": "2025-08",
+      "name": "Curso Avulso",
+      "count": 32,
+      "cents": 3894908
+    },
+    {
+      "month": "2025-08",
+      "name": "Extensivo Programado 1",
+      "count": 23,
+      "cents": 26707778
+    },
+    {
+      "month": "2025-08",
+      "name": "Extensivo Programado 2",
+      "count": 27,
+      "cents": 27778707
+    },
+    {
+      "month": "2025-08",
+      "name": "Extensivo R+",
+      "count": 51,
+      "cents": 47519691
+    },
+    {
+      "month": "2025-08",
+      "name": "Extensivo R1",
+      "count": 47,
+      "cents": 52055555
+    },
+    {
+      "month": "2025-09",
+      "name": "Curso Avulso",
+      "count": 106,
+      "cents": 13095642
+    },
+    {
+      "month": "2025-09",
+      "name": "Extensivo Programado 1",
+      "count": 74,
+      "cents": 89041147
+    },
+    {
+      "month": "2025-09",
+      "name": "Extensivo Programado 2",
+      "count": 96,
+      "cents": 92199252
+    },
+    {
+      "month": "2025-09",
+      "name": "Extensivo R+",
+      "count": 180,
+      "cents": 182557383
+    },
+    {
+      "month": "2025-09",
+      "name": "Extensivo R1",
+      "count": 194,
+      "cents": 225970501
+    },
+    {
+      "month": "2025-10",
+      "name": "Curso Avulso",
+      "count": 94,
+      "cents": 11006545
+    },
+    {
+      "month": "2025-10",
+      "name": "Extensivo Programado 1",
+      "count": 50,
+      "cents": 59246619
+    },
+    {
+      "month": "2025-10",
+      "name": "Extensivo Programado 2",
+      "count": 61,
+      "cents": 61781028
+    },
+    {
+      "month": "2025-10",
+      "name": "Extensivo R+",
+      "count": 121,
+      "cents": 117892879
+    },
+    {
+      "month": "2025-10",
+      "name": "Extensivo R1",
+      "count": 174,
+      "cents": 198269186
+    },
+    {
+      "month": "2025-11",
+      "name": "Curso Avulso",
+      "count": 64,
+      "cents": 8423792
+    },
+    {
+      "month": "2025-11",
+      "name": "Extensivo Programado 1",
+      "count": 38,
+      "cents": 44589726
+    },
+    {
+      "month": "2025-11",
+      "name": "Extensivo Programado 2",
+      "count": 49,
+      "cents": 51044603
+    },
+    {
+      "month": "2025-11",
+      "name": "Extensivo R+",
+      "count": 83,
+      "cents": 83522639
+    },
+    {
+      "month": "2025-11",
+      "name": "Extensivo R1",
+      "count": 116,
+      "cents": 129067376
+    },
+    {
+      "month": "2025-12",
+      "name": "Curso Avulso",
+      "count": 49,
+      "cents": 5927297
+    },
+    {
+      "month": "2025-12",
+      "name": "Extensivo Programado 1",
+      "count": 32,
+      "cents": 39522068
+    },
+    {
+      "month": "2025-12",
+      "name": "Extensivo Programado 2",
+      "count": 35,
+      "cents": 36353545
+    },
+    {
+      "month": "2025-12",
+      "name": "Extensivo R+",
+      "count": 65,
+      "cents": 60530075
+    },
+    {
+      "month": "2025-12",
+      "name": "Extensivo R1",
+      "count": 69,
+      "cents": 77730852
+    },
+    {
+      "month": "2026-01",
+      "name": "Curso Avulso",
+      "count": 42,
+      "cents": 5513130
+    },
+    {
+      "month": "2026-01",
+      "name": "Extensivo Programado 1",
+      "count": 25,
+      "cents": 30653707
+    },
+    {
+      "month": "2026-01",
+      "name": "Extensivo Programado 2",
+      "count": 30,
+      "cents": 31713338
+    },
+    {
+      "month": "2026-01",
+      "name": "Extensivo R+",
+      "count": 71,
+      "cents": 69029104
+    },
+    {
+      "month": "2026-01",
+      "name": "Extensivo R1",
+      "count": 52,
+      "cents": 57958793
+    },
+    {
+      "month": "2026-02",
+      "name": "Curso Avulso",
+      "count": 37,
+      "cents": 4555213
+    },
+    {
+      "month": "2026-02",
+      "name": "Extensivo Programado 1",
+      "count": 25,
+      "cents": 29158494
+    },
+    {
+      "month": "2026-02",
+      "name": "Extensivo Programado 2",
+      "count": 35,
+      "cents": 36018952
+    },
+    {
+      "month": "2026-02",
+      "name": "Extensivo R+",
+      "count": 56,
+      "cents": 52079287
+    },
+    {
+      "month": "2026-02",
+      "name": "Extensivo R1",
+      "count": 57,
+      "cents": 64158549
+    },
+    {
+      "month": "2026-03",
+      "name": "Curso Avulso",
+      "count": 45,
+      "cents": 5073395
+    },
+    {
+      "month": "2026-03",
+      "name": "Extensivo Programado 1",
+      "count": 18,
+      "cents": 22148729
+    },
+    {
+      "month": "2026-03",
+      "name": "Extensivo Programado 2",
+      "count": 38,
+      "cents": 46083775
+    },
+    {
+      "month": "2026-03",
+      "name": "Extensivo R+",
+      "count": 78,
+      "cents": 72999739
+    },
+    {
+      "month": "2026-03",
+      "name": "Extensivo R1",
+      "count": 61,
+      "cents": 67923175
+    },
+    {
+      "month": "2026-04",
+      "name": "Curso Avulso",
+      "count": 42,
+      "cents": 5134682
+    },
+    {
+      "month": "2026-04",
+      "name": "Extensivo Programado 1",
+      "count": 28,
+      "cents": 34188240
+    },
+    {
+      "month": "2026-04",
+      "name": "Extensivo Programado 2",
+      "count": 38,
+      "cents": 41898629
+    },
+    {
+      "month": "2026-04",
+      "name": "Extensivo R+",
+      "count": 56,
+      "cents": 53739084
+    },
+    {
+      "month": "2026-04",
+      "name": "Extensivo R1",
+      "count": 66,
+      "cents": 73167843
+    },
+    {
+      "month": "2026-05",
+      "name": "Curso Avulso",
+      "count": 36,
+      "cents": 4784252
+    },
+    {
+      "month": "2026-05",
+      "name": "Extensivo Programado 1",
+      "count": 28,
+      "cents": 34184729
+    },
+    {
+      "month": "2026-05",
+      "name": "Extensivo Programado 2",
+      "count": 35,
+      "cents": 38278221
+    },
+    {
+      "month": "2026-05",
+      "name": "Extensivo R+",
+      "count": 75,
+      "cents": 74499746
+    },
+    {
+      "month": "2026-05",
+      "name": "Extensivo R1",
+      "count": 86,
+      "cents": 95885543
+    },
+    {
+      "month": "2026-06",
+      "name": "Curso Avulso",
+      "count": 53,
+      "cents": 6340370
+    },
+    {
+      "month": "2026-06",
+      "name": "Extensivo Programado 1",
+      "count": 33,
+      "cents": 40433957
+    },
+    {
+      "month": "2026-06",
+      "name": "Extensivo Programado 2",
+      "count": 46,
+      "cents": 53613475
+    },
+    {
+      "month": "2026-06",
+      "name": "Extensivo R+",
+      "count": 70,
+      "cents": 69485332
+    },
+    {
+      "month": "2026-06",
+      "name": "Extensivo R1",
+      "count": 78,
+      "cents": 87421353
+    },
+    {
+      "month": "2026-07",
+      "name": "Curso Avulso",
+      "count": 48,
+      "cents": 5576339
+    },
+    {
+      "month": "2026-07",
+      "name": "Extensivo Programado 1",
+      "count": 34,
+      "cents": 39956386
+    },
+    {
+      "month": "2026-07",
+      "name": "Extensivo Programado 2",
+      "count": 57,
+      "cents": 58967191
+    },
+    {
+      "month": "2026-07",
+      "name": "Extensivo R+",
+      "count": 96,
+      "cents": 93098361
+    },
+    {
+      "month": "2026-07",
+      "name": "Extensivo R1",
+      "count": 85,
+      "cents": 97132382
+    }
+  ],
+  "origin_product": [
+    {
+      "origin": "Embaixador",
+      "product": "Curso Avulso",
+      "count": 140,
+      "cents": 16551807
+    },
+    {
+      "origin": "Embaixador",
+      "product": "Extensivo Programado 1",
+      "count": 81,
+      "cents": 90705707
+    },
+    {
+      "origin": "Embaixador",
+      "product": "Extensivo Programado 2",
+      "count": 110,
+      "cents": 108919728
+    },
+    {
+      "origin": "Embaixador",
+      "product": "Extensivo R+",
+      "count": 220,
+      "cents": 198484961
+    },
+    {
+      "origin": "Embaixador",
+      "product": "Extensivo R1",
+      "count": 235,
+      "cents": 248772194
+    },
+    {
+      "origin": "Evento Presencial",
+      "product": "Curso Avulso",
+      "count": 169,
+      "cents": 20450002
+    },
+    {
+      "origin": "Evento Presencial",
+      "product": "Extensivo Programado 1",
+      "count": 103,
+      "cents": 119697156
+    },
+    {
+      "origin": "Evento Presencial",
+      "product": "Extensivo Programado 2",
+      "count": 147,
+      "cents": 154078964
+    },
+    {
+      "origin": "Evento Presencial",
+      "product": "Extensivo R+",
+      "count": 252,
+      "cents": 237064735
+    },
+    {
+      "origin": "Evento Presencial",
+      "product": "Extensivo R1",
+      "count": 312,
+      "cents": 345511962
+    },
+    {
+      "origin": "Indicação Direta",
+      "product": "Curso Avulso",
+      "count": 163,
+      "cents": 20783543
+    },
+    {
+      "origin": "Indicação Direta",
+      "product": "Extensivo Programado 1",
+      "count": 120,
+      "cents": 147724039
+    },
+    {
+      "origin": "Indicação Direta",
+      "product": "Extensivo Programado 2",
+      "count": 152,
+      "cents": 170160608
+    },
+    {
+      "origin": "Indicação Direta",
+      "product": "Extensivo R+",
+      "count": 240,
+      "cents": 233250700
+    },
+    {
+      "origin": "Indicação Direta",
+      "product": "Extensivo R1",
+      "count": 249,
+      "cents": 285977223
+    },
+    {
+      "origin": "Orgânico",
+      "product": "Curso Avulso",
+      "count": 295,
+      "cents": 35779702
+    },
+    {
+      "origin": "Orgânico",
+      "product": "Extensivo Programado 1",
+      "count": 186,
+      "cents": 230171301
+    },
+    {
+      "origin": "Orgânico",
+      "product": "Extensivo Programado 2",
+      "count": 259,
+      "cents": 284146943
+    },
+    {
+      "origin": "Orgânico",
+      "product": "Extensivo R+",
+      "count": 503,
+      "cents": 496078551
+    },
+    {
+      "origin": "Orgânico",
+      "product": "Extensivo R1",
+      "count": 499,
+      "cents": 572212148
+    }
+  ],
+  "daily": [
+    {
+      "name": "2025-09-30",
+      "count": 327,
+      "cents": 312791719
+    }
+  ],
+  "daily_origin": [
+    {
+      "date": "2025-09-30",
+      "name": "Embaixador",
+      "count": 55,
+      "cents": 49973819
+    },
+    {
+      "date": "2025-09-30",
+      "name": "Evento Presencial",
+      "count": 80,
+      "cents": 76555954
+    },
+    {
+      "date": "2025-09-30",
+      "name": "Indicação Direta",
+      "count": 70,
+      "cents": 72468862
+    },
+    {
+      "date": "2025-09-30",
+      "name": "Orgânico",
+      "count": 122,
+      "cents": 113793084
+    }
+  ],
+  "daily_product": [
+    {
+      "date": "2025-09-30",
+      "name": "Curso Avulso",
+      "count": 55,
+      "cents": 7093678
+    },
+    {
+      "date": "2025-09-30",
+      "name": "Extensivo Programado 1",
+      "count": 30,
+      "cents": 37112949
+    },
+    {
+      "date": "2025-09-30",
+      "name": "Extensivo Programado 2",
+      "count": 51,
+      "cents": 49193722
+    },
+    {
+      "date": "2025-09-30",
+      "name": "Extensivo R+",
+      "count": 84,
+      "cents": 90608610
+    },
+    {
+      "date": "2025-09-30",
+      "name": "Extensivo R1",
+      "count": 107,
+      "cents": 128782760
+    }
+  ],
+  "quality": {
+    "rows": 4435,
+    "csv_sha256": "b7be2461df8d76db66cd9bbd95e702bf0deaeb3e456b108d1e07fae7ea16e5c2",
+    "money_formats": {
+      "BR": 4319,
+      "PONTO": 116
+    },
+    "date_formats": {
+      "BR": 746,
+      "ISO": 3689
+    },
+    "identical_extra_rows_retained": 3,
+    "monthly": [
+      {
+        "month": "2025-11",
+        "negative": 0,
+        "zero": 0,
+        "identical_extra_rows_retained": 2
+      },
+      {
+        "month": "2026-02",
+        "negative": 1,
+        "zero": 0,
+        "identical_extra_rows_retained": 0
+      },
+      {
+        "month": "2026-04",
+        "negative": 0,
+        "zero": 1,
+        "identical_extra_rows_retained": 1
+      }
+    ],
+    "note": "Linhas idênticas preservadas: ausência de ID transacional impede deduplicação segura.",
+    "exceptions": [
+      {
+        "type": "negative",
+        "count": 1
+      },
+      {
+        "type": "zero",
+        "count": 1
+      }
+    ]
+  }
+}

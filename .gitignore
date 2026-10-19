@@ -1,0 +1,9 @@
+.vercel/
+.env*
+__pycache__/
+*.pyc
+.DS_Store
+input/
+deliverables/
+*.pdf
+*.pptx

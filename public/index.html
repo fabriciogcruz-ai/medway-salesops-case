@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#00205B" />
+    <meta
+      name="description"
+      content="Medway SalesOps — análise de vendas B2C e carteira contratada B2B com métricas e limites transparentes."
+    />
+    <title>SalesOps | Medway</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css?v=20261018-mobile-first" />
+  </head>
+  <body id="top">
+    <a class="skip" href="#content">Ir para indicadores</a>
+    <header class="topbar">
+      <div class="brand">
+        <img src="medway-logo.svg" alt="Medway" /><span
+          class="brand-divider"
+          aria-hidden="true"
+        ></span
+        ><span class="brand-name">SALES<span>OPS</span></span>
+      </div>
+      <div class="topright">
+        <span class="source-indicator" aria-hidden="true"></span
+        ><span id="source-health">Carregando fontes</span
+        ><a href="#metodologia"
+          >Sobre os dados <span aria-hidden="true">↗</span></a
+        >
+      </div>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="page-title">
+        <div class="hero-copy">
+          <div class="eyebrow">
+            <span class="eyebrow-rule"></span>RESPOSTA EXECUTIVA
+            <span class="eyebrow-sub">/ CASE SALESOPS</span>
+          </div>
+          <h1 id="page-title">
+            Mais vendas.<br /><span>Mas com eficiência?</span>
+          </h1>
+          <p>
+            No histórico comparável, o B2C avançou sobretudo em volume.
+            Antes de escalar, é preciso medir eficiência. No B2B, a carteira
+            contratual está concentrada.
+          </p>
+        </div>
+        <div class="hero-side">
+          <span class="micro">A PRIMEIRA DECISÃO</span
+          ><strong>Validar antes<br />de escalar.</strong>
+          <p>
+            Medir margem/CAC antes de escalar; em paralelo, acompanhar os
+            contratos B2B mais concentrados. As análises B2C abaixo respeitam o
+            período selecionado; B2B é uma fotografia independente.
+          </p>
+          <span class="hero-date" id="asof">Carregando dados…</span>
+        </div>
+      </section>
+      <nav class="tabs" aria-label="Visões do dashboard">
+        <button
+          type="button"
+          class="tab active"
+          data-view="overview"
+          aria-current="page"
+        >
+          <span>01</span> Visão executiva</button
+        ><button type="button" class="tab" data-view="b2c">
+          <span>02</span> Vendas B2C</button
+        ><button type="button" class="tab" data-view="b2b">
+          <span>03</span> Contratos B2B
+        </button>
+      </nav>
+      <section
+        class="control-bar"
+        id="control-bar"
+        aria-label="Filtro de período B2C"
+      >
+        <div class="controls">
+          <span class="micro">PERÍODO B2C</span><label for="from">De</label
+          ><select id="from" aria-label="Mês inicial B2C"></select
+          ><label for="to">até</label
+          ><select id="to" aria-label="Mês final B2C"></select>
+        </div>
+        <span class="control-note" id="coverage">Carregando cobertura…</span>
+      </section>
+      <div id="content" aria-live="polite">
+        <div class="skeleton-grid" aria-hidden="true">
+          <span></span><span></span><span class="skeleton-wide"></span>
+        </div>
+        <p class="sr-only">Carregando indicadores…</p>
+      </div>
+      <section class="method" id="metodologia" aria-labelledby="method-title">
+        <div class="method-heading">
+          <div>
+            <span class="micro">NOTAS DE LEITURA / 01—04</span>
+            <h2 id="method-title">
+              Antes de tomar<br /><span>uma decisão.</span>
+            </h2>
+          </div>
+          <p>
+            O rigor importa tanto quanto o gráfico. Estas são as fronteiras do
+            que os dados permitem afirmar.
+          </p>
+        </div>
+        <details class="method-details">
+          <summary>
+            Ver fontes, regras e limites <span aria-hidden="true">+</span>
+          </summary>
+          <div class="method-grid">
+            <article>
+              <span>01 / ORIGEM</span>
+              <p>
+                B2C vem de um CSV fechado fornecido para o case; não há conexão
+                à planilha viva. B2B usa a API quando disponível no servidor e
+                um snapshot datado como contingência. No GitHub Pages, a coleta
+                é agendada; o horário exibido é da coleta, não da última
+                alteração na origem.
+              </p>
+            </article>
+            <article>
+              <span>02 / DEFINIÇÕES</span>
+              <p>
+                B2C soma <code>valor_pago</code> por data da venda, incluindo
+                zeros e ajustes negativos. B2B soma
+                <code>valor_mensal</code> apenas dos contratos cujo status atual
+                é <code>ativo</code>. Valor contratado não é recebimento.
+              </p>
+            </article>
+            <article>
+              <span>03 / COMPARAÇÃO</span>
+              <p>
+                Vendas acumuladas e valor mensal contratado não formam uma
+                “receita total”. Sem histórico de status, datas de encerramento
+                e regras de cobrança, não é possível reconstruir MRR passado ou
+                churn por período.
+              </p>
+            </article>
+            <article>
+              <span>04 / QUALIDADE</span>
+              <p>
+                Formatos de data e moeda foram normalizados. Linhas idênticas
+                permanecem sem ID transacional para deduplicação segura. Um pico
+                diário expressivo é destacado, não atribuído a uma causa sem
+                evidência.
+              </p>
+            </article>
+          </div>
+        </details>
+      </section>
+    </main>
+    <footer>
+      <span>MEDWAY / SALESOPS</span
+      ><span
+        >Case técnico para processo seletivo · Fabrício Cruz · Não é painel
+        oficial da Medway</span
+      ><a href="#top">Voltar ao topo ↑</a>
+    </footer>
+    <script src="app.js?v=20261018-filter-fix" defer></script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+input/
+docs/
+deliverables/
+tests/
+__pycache__/
+*.pdf
+*.pptx
+.env*
