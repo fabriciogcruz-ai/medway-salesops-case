@@ -11,6 +11,8 @@ const state = {
   to: null,
   insightsMarkup: null,
   insightsPromise: null,
+  localDemo: false,
+  localStatus: null,
 };
 const $ = (id) => document.getElementById(id);
 const money = (c) =>
@@ -415,7 +417,18 @@ function render() {
   $("asof").textContent =
     `B2C até ${date(state.b2c.period.last)} · B2B ${state.b2bLive ? "API" : "snapshot de " + date(state.b2b.fetched_at)}`;
   $("coverage").textContent =
-    `CSV B2C fechado · ${date(state.b2c.period.first)} a ${date(state.b2c.period.last)}`;
+    `${state.localDemo ? "CSV local observado" : "CSV B2C fechado"} · ${date(state.b2c.period.first)} a ${date(state.b2c.period.last)}`;
+  $("demo-banner").hidden = !state.localDemo;
+  if (state.localDemo && state.localStatus) {
+    const stamp = new Date(state.localStatus.updated_at);
+    const asOf = Number.isNaN(stamp.getTime()) ? "—" : new Intl.DateTimeFormat("pt-BR", {
+      timeZone: "America/Sao_Paulo", day: "2-digit", month: "2-digit", year: "numeric",
+      hour: "2-digit", minute: "2-digit", second: "2-digit",
+    }).format(stamp);
+    $("demo-status").textContent = state.localStatus.error
+      ? `${state.localStatus.source} inválido; mantendo último agregado válido de ${asOf}`
+      : `${state.localStatus.source} · processado em ${asOf} · B2B ${state.b2bLive ? "API consultada" : "snapshot datado"}`;
+  }
 }
 async function getJson(url) {
   let r = await fetch(url, { cache: "no-store" });
@@ -537,6 +550,38 @@ async function refreshB2B() {
   }
   render();
 }
+let localPollInFlight = false;
+async function refreshLocalDemo() {
+  if (localPollInFlight) return;
+  localPollInFlight = true;
+  try {
+    const status = await getJson("/api/local-status");
+    if (status.mode !== "local-demo") return;
+    let changed = !state.localDemo || state.localStatus?.error !== status.error;
+    if (status.sha256 && status.sha256 !== state.b2c.quality.csv_sha256) {
+      const fresh = await getJson("data/b2c.json");
+      if (fresh.quality?.csv_sha256 !== status.sha256) return; // writer still finishing
+      const previousMonths = state.b2c.monthly.map((r) => r.name);
+      const months = fresh.monthly.map((r) => r.name);
+      state.b2c = fresh;
+      if (state.to === previousMonths.at(-1)) state.to = months.at(-1);
+      if (!months.includes(state.from)) state.from = months[0];
+      if (!months.includes(state.to)) state.to = months.at(-1);
+      for (const id of ["from", "to"]) {
+        $(id).innerHTML = months.map((m) => `<option value="${m}">${longMonth(m)}</option>`).join("");
+        $(id).value = state[id];
+      }
+      changed = true;
+    }
+    state.localDemo = true;
+    state.localStatus = status;
+    if (changed) render();
+  } catch (error) {
+    if (state.localDemo) console.warn("Prévia local indisponível; mantendo últimos dados", error);
+  } finally {
+    localPollInFlight = false;
+  }
+}
 async function init() {
   try {
     const requestedView = new URLSearchParams(location.search).get("view");
@@ -592,6 +637,17 @@ async function init() {
     render();
     if (!state.b2bScheduled) await refreshB2B();
     setInterval(refreshB2B, 15 * 60 * 1000);
+    if (["127.0.0.1", "localhost"].includes(location.hostname)) {
+      try {
+        const status = await getJson("/api/local-status");
+        if (status.mode === "local-demo") {
+          state.localDemo = true;
+          state.localStatus = status;
+          render();
+          setInterval(refreshLocalDemo, 2000);
+        }
+      } catch { /* Static preview has no file watcher. */ }
+    }
   } catch (e) {
     $("source-health").textContent = "Dados indisponíveis";
     $("content").innerHTML =

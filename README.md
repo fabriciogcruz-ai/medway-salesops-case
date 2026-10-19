@@ -57,7 +57,22 @@ python3 dev_server.py
 
 Abra `http://127.0.0.1:8777/` para testar a função local que consulta a API B2B. **No link público GitHub Pages, a atualização vem do snapshot horário gerado pelo GitHub Actions; não há função serverless chamada a cada visita.**
 
-**Atualizar B2C:** substituir `input/b2c-original.csv` por nova exportação com o mesmo esquema e executar `python3 pipeline.py --b2c-only` no build/deploy (ou gatilho de CI). **A origem não atualiza sozinha:** nenhum acesso à planilha viva foi fornecido. Não apresentar o CSV fixo como sincronização automática do Google Sheets.
+**Atualizar B2C em um build:** quando receber uma nova exportação, executar `python3 pipeline.py --b2c-only --csv /caminho/nova-exportacao.csv` e validar os agregados antes do deploy. Não sobrescrever o CSV original recebido. **A origem Google não atualiza sozinha:** nenhum acesso à planilha viva foi fornecido. Não apresentar o CSV fixo como sincronização automática do Google Sheets.
+
+### Demonstração ao vivo: CSV local → dashboard local
+
+O case forneceu apenas um CSV exportado, não a permissão para ler a Google Sheet original. Nesta máquina há uma **cópia privada** em `input/b2c-demo.csv`; o arquivo recebido em `~/medway-salesops/input/b2c-original.csv` não é editado. A pasta `input/` está ignorada pelo Git e excluída do pacote de entrega.
+
+```bash
+cd ~/medway-salesops-release
+python3 demo_local.py --port 8791
+```
+
+Abra `http://127.0.0.1:8791/` e **edite/salve `input/b2c-demo.csv`** no Excel/Numbers (não o CSV original). O observador espera o salvamento estabilizar, valida o arquivo inteiro, recompõe apenas os agregados públicos e o dashboard aberto consulta a nova versão automaticamente. O banner **“PRÉVIA LOCAL · CSV observado automaticamente”** mostra o último processamento. Se o CSV estiver incompleto/inválido, conserva o agregado anterior e sinaliza o erro. Para uma demonstração, use uma linha claramente marcada `DEMO_LOCAL_NAO_REAL` e remova-a depois; não apresente essa linha como venda real.
+
+O servidor local usa `input/b2b-token.txt` (arquivo privado, permissão `600`, também ignorado pelo Git) ou `MEDWAY_B2B_TOKEN` no ambiente para consultar `/api/b2b` **no servidor**; o navegador recebe somente agregados. Sem token, a tela rotula o snapshot B2B de contingência. O token não vai no JavaScript, URL pública, ZIP ou repositório. A API do case foi fornecida em HTTP — esta prévia demonstra o fluxo com o token, **não** resolve a segurança do transporte externo; para produção, a Medway deve oferecer HTTPS com certificado válido.
+
+**Diferença importante:** o GitHub Pages público continua usando B2C publicado como snapshot da exportação; salvar o CSV local **não transmite automaticamente o arquivo nem atualiza o site público**. A atualização B2B pública é agendada com o token em GitHub Actions. No vídeo, identifique a janela `127.0.0.1` como prova local da automação e apresente separadamente o link público, sem alegar acesso à planilha Google original.
 
 ## Apresentação e vídeo
 

@@ -147,7 +147,7 @@ s=base(6,'Método · rastreabilidade','O pipeline reconcilia snapshots; não cri
 for i,(heading,body) in enumerate([
     ('01  CSV B2C','Normalizar datas e moeda; manter negativo, zero e linhas idênticas sem ID.'),
     ('02  TESTES','Somar 4.435 linhas / R$ 40.165.219,74; 28 IDs B2B = 26 ativos + 2 fora do ativo.'),
-    ('03  PUBLICAÇÃO','B2C é CSV fixo. B2B recebe snapshot agendado a cada hora; carimbo revela defasagem.')]):
+    ('03  ATUALIZAÇÃO','B2C: CSV observado na prévia local; site público usa exportação validada. B2B: coleta agendada com token.')]):
     y=2.18+i*1.30;rect(s,.77,y,11.74,1.10,WHITE if i!=1 else PALE)
     txt(s,heading,1.04,y+.15,2.48,.41,16,NAVY,True)
     txt(s,body,3.52,y+.15,8.65,.82,16,NAVY)
@@ -160,7 +160,7 @@ txt(s,'CÓDIGO + TESTES',1.05,2.59,5.0,.38,15,NAVY,True)
 txt(s,'Parser determinístico, agregações e asserts para totais, janela comparável e status ativo.',1.05,3.18,4.96,1.70,19,NAVY)
 txt(s,'IA + REVISÃO',6.95,2.59,5.0,.38,15,NAVY,True)
 txt(s,'IA apoiou testes e visualizações; código reconciliou 28 IDs = 26 ativos + 2 fora. Conclusões limitadas ao dado disponível.',6.95,3.18,5.00,1.77,19,NAVY)
-txt(s,'Sem acesso à planilha viva; API B2B em HTTP requer TLS válido para uso produtivo.',.81,6.11,11.69,.54,17,NAVY,True)
+txt(s,'CSV local observado; Google Sheet original não compartilhada. Token B2B no servidor; HTTPS depende da fonte.',.81,6.11,11.69,.58,16,NAVY,True)
 
 # MAIN 8 — prioritized action close.
 s=base(8,'Decisão · próximos passos','A ordem é validar, medir economia, proteger exposição.',dark=True)
